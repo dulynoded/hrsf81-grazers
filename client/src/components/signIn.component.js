@@ -1,6 +1,7 @@
 module.exports = {
   bindings: {
-    signIn: '<'
+    signIn: '<',
+    signUp: '<',
   },
   controller($http) {
     this.user = '';

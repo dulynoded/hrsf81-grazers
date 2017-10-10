@@ -1,10 +1,9 @@
 module.exports = {
   bindings: {
-    signUp: '<'
+    signUp: '<',
   },
   controller($http) {
     this.user = 'Test';
-    console.log('in signup component!');
 
     // this.loadUsers = () =>
     //   $http({

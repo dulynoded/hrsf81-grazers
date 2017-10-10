@@ -8,17 +8,18 @@ angular.module('eventHUD', ['ngRoute', 'ngMaterial'])
   .config(($routeProvider, $locationProvider) => {
     $routeProvider
       .when('/', {
-        template: '<sign-in sign-in="$resolve.signIn"></sign-in>',
+        template: '<sign-in sign-in="$resolve.signIn" sign-up="$resolve.signUp"></sign-in>',
         resolve: {
-          signIn: signin => signin.submit()
+          signIn: signin => signin.submit(),
+          signUp: signin => signin.signUpRedirect()
         }
       })
-      // .when('/signup', {
-      //   template: '<sign-up sign-up="$resolve.signUp"></sign-up>',
-      //   resolve: {
-      //     signUp: signin => signin.signup()
-      //   }
-      // })
+      .when('/signup', {
+        template: '<sign-up sign-up="$resolve.signUp"></sign-up>',
+        resolve: {
+          signUp: signin => signin.signUp()
+        }
+      })
       .when('/organizer', {
         template: '<manage-event user="$resolve.user"></manage-event>',
         resolve: {
