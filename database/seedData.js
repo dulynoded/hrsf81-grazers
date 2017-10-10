@@ -9,6 +9,30 @@ module.exports = {
     }
   ],
 
+  schedules: [
+    {
+      date: 'October 9, 2017',
+      time: '8:00 AM to 10:00 AM',
+      activity: 'Registration',
+      location: 'Front Lobby',
+      groupId: 1
+    },
+    {
+      date: 'October 9, 2017',
+      time: '10:00 AM to 11:00 AM',
+      activity: 'Keynote Speaker',
+      location: 'Main Auditorium',
+      groupId: 2
+    },
+    {
+      date: 'October 9, 2017',
+      time: '12:00 PM to 1:30 PM',
+      activity: 'Lunch',
+      location: 'Grand Ballroom',
+      groupId: 3
+    }
+  ],
+
   groups: [
     {
       name: 'Greeters',
