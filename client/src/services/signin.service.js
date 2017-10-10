@@ -5,7 +5,6 @@ function signIn($location) {
 
   this.submit = () => (
     (user) => {
-      console.log('in submit');
       this.user = JSON.parse(user);
       $location.path(`/${this.user.role}`);
     }
@@ -13,7 +12,6 @@ function signIn($location) {
 
   this.signUpRedirect = () => (
     () => {
-      console.log('in redirect');
       $location.path('/signup');
     }
   );
