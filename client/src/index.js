@@ -13,6 +13,12 @@ angular.module('eventHUD', ['ngRoute', 'ngMaterial'])
           signIn: signin => signin.submit()
         }
       })
+      // .when('/signup', {
+      //   template: '<sign-up sign-up="$resolve.signUp"></sign-up>',
+      //   resolve: {
+      //     signUp: signin => signin.signup()
+      //   }
+      // })
       .when('/organizer', {
         template: '<manage-event user="$resolve.user"></manage-event>',
         resolve: {

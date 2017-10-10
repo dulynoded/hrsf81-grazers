@@ -12,7 +12,7 @@ pool.query('CREATE TABLE IF NOT EXISTS users (id SERIAL UNIQUE NOT NULL PRIMARY 
   .then(() => pool.query('CREATE TABLE IF NOT EXISTS activities (id SERIAL UNIQUE NOT NULL PRIMARY KEY, time VARCHAR(80), activity VARCHAR(80), location VARCHAR(80), schedule_id SERIAL REFERENCES schedules(id))'))
   .then(() => pool.query('CREATE TABLE IF NOT EXISTS group_activity (group_id SERIAL NOT NULL REFERENCES groups(id), activity_id SERIAL NOT NULL REFERENCES activities(id), PRIMARY KEY (group_id, activity_id))'))
   .then(() => pool.query('CREATE TABLE IF NOT EXISTS group_user (group_id SERIAL NOT NULL REFERENCES groups(id), user_id SERIAL NOT NULL REFERENCES users(id), PRIMARY KEY (group_id, user_id))'))
-  .then(() => pool.query('CREATE TABLE IF NOT EXISTS messages (id SERIAL UNIQUE NOT NULL PRIMARY KEY, from_user_id SERIAL REFERENCES users(id), to_group_id SERIAL REFERENCES groups(id), title VARCHAR(80) NOT NULL, text VARCHAR(140), event_id SERIAL REFERENCES events(id), date_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP, msg_group_id INTEGER)'))
+  .then(() => pool.query('CREATE TABLE IF NOT EXISTS messages (id SERIAL UNIQUE NOT NULL PRIMARY KEY, from_user_id SERIAL REFERENCES users(id), to_group_id SERIAL REFERENCES groups(id), title VARCHAR(80) NOT NULL, text VARCHAR(140), event_id SERIAL REFERENCES events(id), date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, msg_group_id INTEGER)'))
   .then(() => db.addUser(seed.organizer))
   .then(() => Promise.all(seed.users.map(user => db.addUser(user))))
   .then(() => Promise.all(seed.events.map(event => db.addEvent(event))))

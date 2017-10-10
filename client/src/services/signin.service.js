@@ -3,10 +3,20 @@ function signIn($location) {
 
   this.getUser = () => this.user;
 
-  this.submit = () =>
+  this.submit = () => (
     (user) => {
       this.user = JSON.parse(user);
       $location.path(`/${this.user.role}`);
+      console.log('redirecting');
+      // $location.path('/signup');
+    }
+  );
+
+  this.signUp = () =>
+    (userData) => {
+      console.log('in signup!', userData);
+      this.user = JSON.parse(userData);
+      $location.path('/organizer');
     };
 }
 
