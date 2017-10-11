@@ -5,7 +5,8 @@ module.exports = {
   controller($http, $scope) {
     this.user = 'Test';
     this.conferences = [{ name: 'test conference', id: 1 }, { name: 'test2 conference', id: 2 }];
-    this.roles = [{ name: 'volunteer', id: 1 }, { name: 'greeter', id: 2 }];
+    this.roles = [{ name: 'organizer', id: 1 }, { name: 'staff', id: 2 }];
+    this.jobs = [{ name: 'volunteers', id: 1 }, { name: 'greeters', id: 2 }];
 
     this.loadConferences = () => {
       console.log('loading conferences');
@@ -24,16 +25,26 @@ module.exports = {
       email: '',
     };
     this.handleClick = () => {
-      $scope.form.conference = JSON.parse($scope.form.conference);
+      $scope.form.conference = JSON.parse($scope.form.conference).name;
       // FIXME: Need to include staff/organizer role and job
-      $scope.form.role = JSON.parse($scope.form.role);
+      $scope.form.role = JSON.parse($scope.form.role).name;
+      $scope.form.job = JSON.parse($scope.form.job).name;
+      console.log('data to send', $scope.form);
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {
           console.log('DB data is', data);
-          this.signUp($scope.form);
+          const userData = Object.assign(
+            {},
+            $scope.form,
+            { id: data.userId, group_id: data.groupId }
+          );
+          this.signUp(userData);
         })
-        .catch(console.error);
+        .catch(err => {
+          // TODO: This email is already taken, try again.
+          console.log('err is', err);
+        });
 
     };
 

@@ -1,9 +1,8 @@
 const passportLocal = require('passport-local');
-const bCrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt-nodejs');
 const flash = require('connect-flash');
 const db = require('../../database/index');
 const LocalStrategy = require('passport-local').Strategy;
-
 
 module.exports = (passport) => {
   passport.serializeUser((user, done) => {
@@ -29,30 +28,40 @@ module.exports = (passport) => {
     process.nextTick((callback) => {
       // find a user whose email is the same as the forms email
       // we are checking to see if the user trying to login already exists
+      let userInsertId;
+      let groupId;
       db.findOneEmail(email)
         .then((results) => {
           if (results.rowCount > 0) {
             console.log('email taken');
-            return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+            return done(null, false);
           }
           // console.log('new user!');
           const data = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            password: req.body.password,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
             role: req.body.role,
             email: req.body.email,
             phone: req.body.phone,
           };
-          console.log('data to add is', data);
 
           return db.addUser(data);
         })
         .then((results) => {
-          console.log('new user is', results);
+          userInsertId = results.rows[0].id;
           passport.authenticate();
-          console.log('DONE!', results);
-          return done(null, results);
+          console.log('job is', req.body.job);
+          return db.findGroup(req.body.job);
+        })
+        .then((results) => {
+          console.log('find results are', results);
+          groupId = results.rows[0].id;
+          return db.addUserToGroup(groupId, userInsertId);
+        })
+        .then(() => {
+          return done(null, { userId: userInsertId, groupId });
         })
         .catch((err) => {
           throw err;
@@ -74,6 +83,7 @@ module.exports = (passport) => {
         if (results.rowCount === 0) {
           return done(null, false, req.flash('loginMessage', 'No user found.'));
         }
+        // FIXME: Add bcrypt.compareSync(password, this.local.password);
         if (!results.validPassword(password)) {
           return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
         }

@@ -5,8 +5,8 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, firstname, lastname, email, phone_number) values($1, $2, $3, $4, $5) RETURNING id',
-    [user.role, user.firstname, user.lastname, user.email, user.phone]
+    'INSERT INTO users(role, firstname, lastname, email, phone_number, password) values($1, $2, $3, $4, $5, $6) RETURNING id',
+    [user.role, user.firstname, user.lastname, user.email, user.phone, user.password]
   );
 
 const addEvent = event =>
@@ -37,6 +37,11 @@ const addGroup = group =>
   pool.query(
     'INSERT INTO groups(name, type, event_id, schedule_id) values($1, $2, $3, $4)',
     [group.name, group.type, group.eventId, group.scheduleId]
+  );
+
+const findGroup = group =>
+  pool.query(
+    `SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}')`,
   );
 
 const addUserToGroup = (groupId, userId) =>
@@ -129,4 +134,5 @@ module.exports = {
   getGroupsByEvent,
   findUserById,
   findOneEmail,
+  findGroup,
 };
