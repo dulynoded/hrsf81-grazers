@@ -27,6 +27,12 @@ const addActivity = activity =>
     [activity.time, activity.activity, activity.location, activity.scheduleId]
   );
 
+const addGroupToActivity = (groupId, activityId) =>
+  pool.query(
+    'INSERT INTO group_activity(group_id, activity_id) values($1, $2)',
+    [groupId, activityId]
+  );
+
 const addGroup = group =>
   pool.query(
     'INSERT INTO groups(name, type, event_id, schedule_id) values($1, $2, $3, $4)',
@@ -83,6 +89,7 @@ module.exports = {
   addEvent,
   addSchedule,
   addActivity,
+  addGroupToActivity,
   addGroup,
   addUserToGroup,
   addMessage,

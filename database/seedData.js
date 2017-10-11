@@ -64,6 +64,29 @@ module.exports = {
     }
   ],
 
+  groupActivity: [
+    {
+      groupId: 1,
+      activityId: 1
+    },
+    {
+      groupId: 1,
+      activityId: 2
+    },
+    {
+      groupId: 3,
+      activityId: 2
+    },
+    {
+      groupId: 3,
+      activityId: 3
+    },
+    {
+      groupId: 2,
+      activityId: 3
+    }
+  ],
+
   organizer: {
     role: 'organizer',
     firstName: 'Laurent',
