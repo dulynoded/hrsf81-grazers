@@ -5,7 +5,7 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, firstname, lastname, email, phonenumber) values($1, $2, $3, $4, $5)',
+    'INSERT INTO users(role, first_name, last_name, email, phone_number) values($1, $2, $3, $4, $5)',
     [user.role, user.firstName, user.lastName, user.email, user.phone]
   );
 
@@ -83,6 +83,15 @@ const getMessages = (fromId, toId) =>
      GROUP BY msg_group_id, title, text, firstname, lastname, from_user_id, date_time
      ORDER BY date_time`);
 
+const getUsersByGroup = groupId => 
+  pool.query(`SELECT users.*
+    FROM users
+    INNER JOIN group_user
+    ON users.id = group_user.user_id
+    INNER JOIN groups
+    ON group_user.group_id = groups.id
+    WHERE group_user.group_id = ${groupId}`);
+
 
 module.exports = {
   addUser,
@@ -99,5 +108,6 @@ module.exports = {
   getAllActivities,
   getAllGroups,
   getAllMessages,
-  getMessages
+  getMessages,
+  getUsersByGroup
 };
