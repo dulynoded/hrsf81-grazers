@@ -79,7 +79,7 @@ module.exports = {
         toIds: toGroupIds,
         title: this.messageTitle,
         text: this.messageBody,
-        fromName: `${this.user.firstName} ${this.user.lastName}`,
+        fromName: `${this.user.firstname} ${this.user.lastname}`,
         fromId: this.user.id,
         eventId: 1
       }));

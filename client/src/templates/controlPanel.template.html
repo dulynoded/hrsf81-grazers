@@ -1,5 +1,5 @@
 <div flex layout="column" layout-padding class="container control-panel">
-  <h4 class="md-title">{{$ctrl.user.firstName}} {{$ctrl.user.lastName}}</h4>
+  <h4 class="md-title">{{$ctrl.user.firstname}} {{$ctrl.user.lastname}}</h4>
   <md-list ng-if="$ctrl.user.role === 'organizer'">
     <control-panel-item flex label="$ctrl.event" view="broadcast" on-click="$ctrl.changeView"></control-panel-item>
     <control-panel-item flex ng-repeat="group in $ctrl.groups track by group.id"
@@ -10,7 +10,7 @@
   </md-list>
   <md-list ng-if="$ctrl.user.role !== 'organizer'">
     <md-list-item ng-repeat="member in $ctrl.members track by member.id">
-      <i class="fa fa-user-circle-o fa-lg"></i>&nbsp;<p>{{member.firstName}} {{member.lastName}}<p>
+      <i class="fa fa-user-circle-o fa-lg"></i>&nbsp;<p>{{member.firstname}} {{member.lastname}}<p>
     </md-list-item>
   </md-list>
 </div>
