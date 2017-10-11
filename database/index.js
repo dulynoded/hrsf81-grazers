@@ -105,13 +105,22 @@ const getMessages = (fromId, toId) =>
      ORDER BY date_time`);
 
 const getUsersByGroup = groupId =>
-  pool.query(`SELECT users.* AS camel_case
+  pool.query(`SELECT users.*
     FROM users
     INNER JOIN group_user
     ON users.id = group_user.user_id
     INNER JOIN groups
     ON group_user.group_id = groups.id
     WHERE group_user.group_id = ${groupId}`);
+
+const getGroupByUser = userId =>
+pool.query(`SELECT groups.*
+    FROM groups
+    INNER JOIN group_user
+    ON groups.id = group_user.group_id
+    INNER JOIN users
+    ON group_user.user_id = users.id
+    WHERE group_user.user_id = ${userId}`);
 
 const getGroupsByEvent = eventId =>
   pool.query(`SELECT *
@@ -142,4 +151,6 @@ module.exports = {
   findGroup,
   findGroupById,
   findGroupByUserId,
+  getGroupByUser,
+  getGroupsByEvent
 };
