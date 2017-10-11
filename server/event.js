@@ -1,5 +1,6 @@
 const express = require('express');
 const stub = require('./stubData.js');
+const db = require('../database/index');
 
 const router = express.Router();
 
@@ -19,7 +20,9 @@ router.route('/:eventId')
 
 router.route('/:eventId/groups')
   .get((req, res) => {
-    res.status(200).send(stub.groups);
+    const eventId = Number(req.params.eventId);
+    db.getGroupsByEvent(eventId)
+      .then(groupsData => res.status(200).send(groupsData.rows));
   })
   .post((req, res) => {
     const newGroupObj = req.body;

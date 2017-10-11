@@ -83,7 +83,7 @@ const getMessages = (fromId, toId) =>
      GROUP BY msg_group_id, title, text, firstname, lastname, from_user_id, date_time
      ORDER BY date_time`);
 
-const getUsersByGroup = groupId => 
+const getUsersByGroup = groupId =>
   pool.query(`SELECT users.*
     FROM users
     INNER JOIN group_user
@@ -92,6 +92,10 @@ const getUsersByGroup = groupId =>
     ON group_user.group_id = groups.id
     WHERE group_user.group_id = ${groupId}`);
 
+const getGroupsByEvent = eventId =>
+  pool.query(`SELECT *
+    FROM groups
+    WHERE groups.event_id = ${eventId}`);
 
 module.exports = {
   addUser,
@@ -109,5 +113,6 @@ module.exports = {
   getAllGroups,
   getAllMessages,
   getMessages,
-  getUsersByGroup
+  getUsersByGroup,
+  getGroupsByEvent
 };
