@@ -127,6 +127,11 @@ const getGroupsByEvent = eventId =>
     FROM groups
     WHERE groups.event_id = ${eventId}`);
 
+const getEvent = eventId =>
+  pool.query(`SELECT *
+    FROM events
+    WHERE events.id = ${eventId}`);
+
 module.exports = {
   addUser,
   addEvent,
@@ -152,5 +157,6 @@ module.exports = {
   findGroupById,
   findGroupByUserId,
   getGroupByUser,
-  getGroupsByEvent
+  getGroupsByEvent,
+  getEvent
 };
