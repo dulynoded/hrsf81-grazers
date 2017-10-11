@@ -9,6 +9,7 @@ const WebSocket = require('ws');
 const db = require('../database/index');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const flash = require('connect-flash');
 
 const port = process.env.PORT || '3000';
 const wss = new WebSocket.Server({ server });
@@ -32,16 +33,16 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 })); // session secret
-
 app.use(passport.initialize());
 
 app.use(passport.session()); // persistent login sessions
+app.use(flash());
 
-app.post('/signup', passport.authenticate('local-signup', {
-  successRedirect: '/profile', // redirect to the secure profile section
-  failureRedirect: '/signup', // redirect back to the signup page if there is an error
-  failureFlash: true // allow flash messages
-}));
+// app.post('/signup', passport.authenticate('local-signup', {
+//   successRedirect: '/profile', // redirect to the secure profile section
+//   failureRedirect: '/signup', // redirect back to the signup page if there is an error
+//   failureFlash: true // allow flash messages
+// }));
 
 
 app.use(express.static(path.join(__dirname, '/../client/dist')));

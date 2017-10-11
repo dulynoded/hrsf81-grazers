@@ -2,11 +2,19 @@
   <div layout="column" layout-align="center center" layout-padding md-whiteframe="5" class="signin-form">
     <form flex layout="row" layout-align="end center" layout-wrap layout-padding>
       <h1 flex="100" class="md-display-2">Sign Up</h1>
-      <md-input-container flex="50">
-        <label for="username">Username</label>
-        <input id="username" autocomplete="off" type="username" ng-model="form.username"/>
+      <md-input-container flex="25">
+        <label for="firstname">First name</label>
+        <input id="firstname" autocomplete="off" type="firstname" ng-model="form.firstname"/>
       </md-input-container>
-      <md-input-container flex="50">
+      <md-input-container flex="25">
+          <label for="lastname">Last name</label>
+          <input id="lastname" autocomplete="off" type="lastname" ng-model="form.lastname"/>
+      </md-input-container>
+      <md-input-container flex="25">
+          <label for="email">Email</label>
+          <input id="email" autocomplete="off" type="email" ng-model="form.email"/>
+      </md-input-container>
+      <md-input-container flex="25">
         <label for="password">&nbsp;&nbsp;Password</label>
         <input id="password" autocomplete="off" type="password" ng-model="form.password"/>
       </md-input-container>
@@ -16,7 +24,6 @@
         </md-select>
       </md-input-container>
       <md-input-container flex="50">
-        <!-- <md-select id="roleSelect" required ng-model="$ctrl.roleList" md-on-open="$ctrl.loadRoles()" placeholder="Role"> -->
         <md-select id="roleSelect" required ng-model="form.role" md-on-open="$ctrl.loadRoles()" placeholder="Role">
           <md-option ng-repeat="role in $ctrl.roles track by role.id" value={{role}}>
               {{role.name.charAt(0).toUpperCase() + role.name.slice(1)}}

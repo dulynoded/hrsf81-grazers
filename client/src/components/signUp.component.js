@@ -16,10 +16,12 @@ module.exports = {
     };
 
     $scope.form = {
-      username: '',
+      firstname: '',
+      lastname: '',
       password: '',
       conference: '',
       role: '',
+      email: '',
     };
     this.handleClick = () => {
       $scope.form.conference = JSON.parse($scope.form.conference);

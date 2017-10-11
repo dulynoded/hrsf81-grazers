@@ -5,7 +5,7 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, firstname, lastname, email, phone_number) values($1, $2, $3, $4, $5)',
+    'INSERT INTO users(role, firstname, lastname, email, phone_number) values($1, $2, $3, $4, $5) RETURNING id',
     [user.role, user.firstname, user.lastname, user.email, user.phone]
   );
 
@@ -59,7 +59,15 @@ const getAllUsers = () =>
   pool.query('SELECT * FROM users');
 
 const getOneUser = (firstname, lastname) =>
-  pool.query(`SELECT * FROM users WHERE firstname="${firstname}" AND lastname="${lastname}"`);
+  pool.query(`SELECT * FROM users WHERE firstname='${firstname}' AND lastname='${lastname}'`);
+
+const findOneEmail = email =>
+  pool.query(`SELECT * FROM users WHERE email='${email}'`);
+
+  // pool.query(`select exists (select true from users where email="${email}")`);
+
+const findUserById = id =>
+  pool.query(`SELECT * FROM users WHERE id='${id}'`);
 
 const getAllEvents = () =>
   pool.query('SELECT * FROM events');
@@ -118,5 +126,7 @@ module.exports = {
   getAllMessages,
   getMessages,
   getUsersByGroup,
-  getGroupsByEvent
+  getGroupsByEvent,
+  findUserById,
+  findOneEmail,
 };
