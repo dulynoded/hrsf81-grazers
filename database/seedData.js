@@ -12,24 +12,32 @@ module.exports = {
   schedules: [
     {
       date: 'October 9, 2017',
+      eventId: 1
+    },
+    {
+      date: 'October 10, 2017',
+      eventId: 1
+    }
+  ],
+
+  activities: [
+    {
       time: '8:00 AM to 10:00 AM',
       activity: 'Registration',
       location: 'Front Lobby',
-      groupId: 1
+      scheduleId: 1
     },
     {
-      date: 'October 9, 2017',
       time: '10:00 AM to 11:00 AM',
       activity: 'Keynote Speaker',
       location: 'Main Auditorium',
-      groupId: 2
+      scheduleId: 1
     },
     {
-      date: 'October 9, 2017',
       time: '12:00 PM to 1:30 PM',
       activity: 'Lunch',
       location: 'Grand Ballroom',
-      groupId: 3
+      scheduleId: 2
     }
   ],
 
@@ -38,23 +46,21 @@ module.exports = {
       name: 'Greeters',
       type: 'staff',
       eventId: 1,
-      scheduleId: 2
     },
     {
       name: 'Volunteers',
       type: 'staff',
       eventId: 1,
-      scheduleId: 3
     },
     {
       name: 'Tech Support',
       type: 'staff',
-      eventId: 1
+      eventId: 1,
     },
     {
       name: 'General Admissions',
       type: 'attendee',
-      eventId: 1
+      eventId: 1,
     }
   ],
 

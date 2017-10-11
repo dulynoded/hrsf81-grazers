@@ -17,8 +17,14 @@ const addEvent = event =>
 
 const addSchedule = schedule =>
   pool.query(
-    'INSERT INTO schedules(date, time, activity, location, group_id) values($1, $2, $3, $4, $5)',
-    [schedule.date, schedule.time, schedule.activity, schedule.location, schedule.groupId]
+    'INSERT INTO schedules(date, event_id) values($1, $2)',
+    [schedule.date, schedule.eventId]
+  );
+
+const addActivity = activity =>
+  pool.query(
+    'INSERT INTO activities(time, activity, location, schedule_id) values($1, $2, $3, $4)',
+    [activity.time, activity.activity, activity.location, activity.scheduleId]
   );
 
 const addGroup = group =>
@@ -52,6 +58,9 @@ const getAllEvents = () =>
 const getAllSchedules = () =>
   pool.query('SELECT * FROM schedules');
 
+const getAllActivities = () =>
+  pool.query('SELECT * FROM activities');
+
 const getAllGroups = () =>
   pool.query('SELECT * FROM groups');
 
@@ -73,12 +82,14 @@ module.exports = {
   addUser,
   addEvent,
   addSchedule,
+  addActivity,
   addGroup,
   addUserToGroup,
   addMessage,
   getAllUsers,
   getAllEvents,
   getAllSchedules,
+  getAllActivities,
   getAllGroups,
   getAllMessages,
   getMessages
