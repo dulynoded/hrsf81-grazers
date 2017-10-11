@@ -1,15 +1,18 @@
 const path = require('path');
 const express = require('express');
-const db = require('../database/index');
 
 const app = express();
+const passport = require('passport');
+const session = require('express-session');
 const server = require('http').Server(app);
 const WebSocket = require('ws');
+const db = require('../database/index');
+const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 const port = process.env.PORT || '3000';
 const wss = new WebSocket.Server({ server });
 
-const bodyParser = require('body-parser');
 const event = require('./event');
 const group = require('./group');
 const user = require('./user');
@@ -17,7 +20,30 @@ const messages = require('./messages');
 const schedule = require('./schedule');
 const stub = require('./stubData');
 
+require('./config/passport.js')(passport);
+
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+
+// For Passport
+app.use(session({
+  secret: 'fluffy bunnies',
+  resave: true,
+  saveUninitialized: true,
+})); // session secret
+
+app.use(passport.initialize());
+
+app.use(passport.session()); // persistent login sessions
+
+app.post('/signup', passport.authenticate('local-signup', {
+  successRedirect: '/profile', // redirect to the secure profile section
+  failureRedirect: '/signup', // redirect back to the signup page if there is an error
+  failureFlash: true // allow flash messages
+}));
+
+
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(express.static(path.join(__dirname, '/../node_modules')));
 app.use(express.static(path.join(__dirname, '/../client/src/templates')));
@@ -26,6 +52,7 @@ app.use('/group', group);
 app.use('/user', user);
 app.use('/messages', messages);
 app.use('/schedule', schedule);
+
 
 // const wsKeepAlive = () => {
 //   wss.clients.forEach((client) => {

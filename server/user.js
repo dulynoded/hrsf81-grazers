@@ -4,8 +4,13 @@ const stub = require('./stubData.js');
 const router = express.Router();
 
 router.use((req, res, next) => {
-  console.log('Handing /user routes');
   next();
+});
+
+router.post('/', (req, res) => {
+  console.log('IN POST! req.body is', req.body);
+  const userObj = req.body;
+  res.status(201).send();
 });
 
 router.route('/:userId')

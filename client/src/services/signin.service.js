@@ -5,6 +5,7 @@ function signIn($location) {
 
   this.submit = () => (
     (user) => {
+      console.log('user is', user);
       this.user = JSON.parse(user);
       $location.path(`/${this.user.role}`);
     }
@@ -19,7 +20,6 @@ function signIn($location) {
   this.signUp = () =>
     (userData) => {
       console.log('in signup service!', userData);
-      userData = {firstName: 'bob', role: 'organizer'};
       this.user = userData;
       $location.path(`/${this.user.role}`);
     };

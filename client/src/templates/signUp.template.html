@@ -4,25 +4,26 @@
       <h1 flex="100" class="md-display-2">Sign Up</h1>
       <md-input-container flex="50">
         <label for="username">Username</label>
-        <input id="username" autocomplete="off" type="username"/>
+        <input id="username" autocomplete="off" type="username" ng-model="form.username"/>
       </md-input-container>
       <md-input-container flex="50">
         <label for="password">&nbsp;&nbsp;Password</label>
-        <input id="password" autocomplete="off" type="password"/>
+        <input id="password" autocomplete="off" type="password" ng-model="form.password"/>
       </md-input-container>
       <md-input-container flex="50">
-        <md-select id="conferenceSelect" required ng-model="$ctrl.conferenceList" placeholder="Conference">
+        <md-select id="conferenceSelect" required ng-model="form.conference" placeholder="Conference">
           <md-option ng-repeat="conference in $ctrl.conferences track by conference.id" value={{conference}}>{{conference.name}}</md-option>
         </md-select>
       </md-input-container>
       <md-input-container flex="50">
-        <md-select id="roleSelect" required ng-model="$ctrl.roleList" md-on-open="$ctrl.loadRoles()" placeholder="Role">
+        <!-- <md-select id="roleSelect" required ng-model="$ctrl.roleList" md-on-open="$ctrl.loadRoles()" placeholder="Role"> -->
+        <md-select id="roleSelect" required ng-model="form.role" md-on-open="$ctrl.loadRoles()" placeholder="Role">
           <md-option ng-repeat="role in $ctrl.roles track by role.id" value={{role}}>
               {{role.name.charAt(0).toUpperCase() + role.name.slice(1)}}
           </md-option>
         </md-select>
       </md-input-container>
-      <md-button class="md-accent md-raised" aria-label="Sign Up" ng-click="$ctrl.signUp($ctrl.user)">Sign Up</md-button>
+      <md-button class="md-accent md-raised" aria-label="Sign Up" ng-click="$ctrl.handleClick()">Sign Up</md-button>
     </form>
   </div>
 </div>

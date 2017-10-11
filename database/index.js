@@ -58,6 +58,9 @@ const addMessage = (message) => {
 const getAllUsers = () =>
   pool.query('SELECT * FROM users');
 
+const getOneUser = (firstname, lastname) =>
+  pool.query(`SELECT * FROM users WHERE firstname="${firstname}" AND lastname="${lastname}"`);
+
 const getAllEvents = () =>
   pool.query('SELECT * FROM events');
 
@@ -107,6 +110,7 @@ module.exports = {
   addUserToGroup,
   addMessage,
   getAllUsers,
+  getOneUser,
   getAllEvents,
   getAllSchedules,
   getAllActivities,
