@@ -29,11 +29,9 @@ module.exports = {
       // FIXME: Need to include staff/organizer role and job
       $scope.form.role = JSON.parse($scope.form.role).name;
       $scope.form.job = JSON.parse($scope.form.job).name;
-      console.log('data to send', $scope.form);
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {
-          console.log('DB data is', data);
           const userData = Object.assign(
             {},
             $scope.form,

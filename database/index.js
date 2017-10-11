@@ -44,6 +44,17 @@ const findGroup = group =>
     `SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}')`,
   );
 
+const findGroupById = groupId =>
+  pool.query(
+    `SELECT * FROM groups WHERE id='${groupId}'`,
+  );
+
+const findGroupByUserId = userId =>
+  pool.query(
+    `SELECT * FROM group_user WHERE user_id='${userId}'`,
+  )
+
+
 const addUserToGroup = (groupId, userId) =>
   pool.query(
     'INSERT INTO group_user(group_id, user_id) values($1, $2)',
@@ -135,4 +146,6 @@ module.exports = {
   findUserById,
   findOneEmail,
   findGroup,
+  findGroupById,
+  findGroupByUserId,
 };

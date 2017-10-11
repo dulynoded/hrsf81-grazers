@@ -49,20 +49,36 @@ router.route('/:userId')
 router.get('/:userId/group', (req, res) => {
   const userId = Number(req.params.userId);
   let userGroup;
-  for (let i = 0; i < stub.userGroups.length; i += 1) {
-    if (stub.userGroups[i].userId === userId) {
-      userGroup = stub.userGroups[i];
-      break;
-    }
-  }
-  let group;
-  for (let i = 0; i < stub.groups.length; i += 1) {
-    if (stub.groups[i].id === userGroup.groupId) {
-      group = stub.groups[i];
-      break;
-    }
-  }
-  res.status(200).send(group);
+  db.findGroupByUserId(userId)
+    .then((results) => {
+      console.log('group_user results are', results);
+      const groupId = results.rows[0].group_id;
+      return db.findGroupById(groupId);
+    })
+    .then((results) => {
+      console.log('group results are', results.rows[0]);
+      return results.rows[0];
+    })
+    .then((groupData) => {
+      res.status(200).send(groupData);
+    })
+    .catch((err) => {
+      throw err;
+    });
+  // for (let i = 0; i < stub.userGroups.length; i += 1) {
+  //   if (stub.userGroups[i].userId === userId) {
+  //     userGroup = stub.userGroups[i];
+  //     break;
+  //   }
+  // }
+  // let group;
+  // for (let i = 0; i < stub.groups.length; i += 1) {
+  //   if (stub.groups[i].id === userGroup.groupId) {
+  //     group = stub.groups[i];
+  //     break;
+  //   }
+  // }
+  // res.status(200).send(group);
 });
 
 module.exports = router;
