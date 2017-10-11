@@ -7,7 +7,7 @@
         <md-list-item ng-repeat="member in $ctrl.members track by member.id">
           <i class="fa fa-user-circle-o fa-lg"></i>
           &nbsp;
-          <p>{{member.first_name}} {{member.last_name}}<p>
+          <p>{{member.firstname}} {{member.lastname}}<p>
           <div flex layout="column">
             <p>{{member.email}}</p>
             <p>{{member.phone}}</p>
@@ -21,11 +21,11 @@
     <form id="addUser" flex layout="column" layout-padding ng-submit="$ctrl.addUser()">
       <md-input-container>
         <label for="new-user-first-name">New user's first name?</label>
-        <input id="new-user-first-name" autocomplete="off" ng-model="$ctrl.firstName"/>
+        <input id="new-user-first-name" autocomplete="off" ng-model="$ctrl.firstname"/>
       </md-input-container>
       <md-input-container>
         <label for="new-user-last-name">New user's last name?</label>
-        <input id="new-user-last-name" autocomplete="off" ng-model="$ctrl.lastName"></input>
+        <input id="new-user-last-name" autocomplete="off" ng-model="$ctrl.lastname"></input>
       </md-input-container>
       <md-input-container>
         <label for="new-user-email">New user's email address?</label>

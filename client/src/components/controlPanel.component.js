@@ -19,6 +19,7 @@ module.exports = {
 
     groups.get()
       .then((groupsData) => {
+        console.log('client side groups data', groupsData);
         this.groups = groupsData;
       })
       .catch(console.error);

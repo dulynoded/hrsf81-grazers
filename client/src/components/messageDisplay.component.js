@@ -19,7 +19,6 @@ module.exports = {
         })
           .then(res => res.data)
           .then((data) => {
-            console.log(data);
             this.messages = data.map((message) => {
               message.fromName = `${message.firstname} ${message.lastname}`;
               message.recipients = message.togroups.split('|');

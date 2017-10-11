@@ -5,7 +5,7 @@ const seed = require('./seedData');
 
 const pool = new Pool(config);
 
-pool.query('CREATE TABLE IF NOT EXISTS users (id SERIAL UNIQUE NOT NULL PRIMARY KEY, role VARCHAR(80), first_name VARCHAR(80), last_name VARCHAR(80), email VARCHAR(80), phone_number VARCHAR(80))')
+pool.query('CREATE TABLE IF NOT EXISTS users (id SERIAL UNIQUE NOT NULL PRIMARY KEY, role VARCHAR(80), firstname VARCHAR(80), lastname VARCHAR(80), email VARCHAR(80), phone_number VARCHAR(80))')
   .then(() => pool.query('CREATE TABLE IF NOT EXISTS events (id SERIAL UNIQUE NOT NULL PRIMARY KEY, name VARCHAR(80), location VARCHAR(80), organizer_id SERIAL REFERENCES users(id), schedule_id INTEGER)'))
   .then(() => pool.query('CREATE TABLE IF NOT EXISTS groups (id SERIAL UNIQUE NOT NULL PRIMARY KEY, name VARCHAR(80), type VARCHAR(80), event_id SERIAL REFERENCES events(id), schedule_id INTEGER)'))
   .then(() => pool.query('CREATE TABLE IF NOT EXISTS schedules (id SERIAL UNIQUE NOT NULL PRIMARY KEY, date VARCHAR(80), event_id SERIAL REFERENCES events(id))'))

@@ -5,8 +5,8 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, first_name, last_name, email, phone_number) values($1, $2, $3, $4, $5)',
-    [user.role, user.firstName, user.lastName, user.email, user.phone]
+    'INSERT INTO users(role, firstname, lastname, email, phone_number) values($1, $2, $3, $4, $5)',
+    [user.role, user.firstname, user.lastname, user.email, user.phone]
   );
 
 const addEvent = event =>
@@ -84,7 +84,7 @@ const getMessages = (fromId, toId) =>
      ORDER BY date_time`);
 
 const getUsersByGroup = groupId =>
-  pool.query(`SELECT users.*
+  pool.query(`SELECT users.* AS camel_case
     FROM users
     INNER JOIN group_user
     ON users.id = group_user.user_id

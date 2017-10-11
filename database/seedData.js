@@ -89,8 +89,8 @@ module.exports = {
 
   organizer: {
     role: 'organizer',
-    firstName: 'Laurent',
-    lastName: 'Frazier',
+    firstname: 'Laurent',
+    lastname: 'Frazier',
     email: 'laurent@grazerscon.com',
     phone: '555-235-9802'
   },
@@ -98,36 +98,36 @@ module.exports = {
   users: [
     {
       role: 'staff',
-      firstName: 'David',
-      lastName: 'Friedman',
+      firstname: 'David',
+      lastname: 'Friedman',
       email: 'david@grazerscon.com',
       phone: '555-492-1763'
     },
     {
       role: 'staff',
-      firstName: 'Austin',
-      lastName: 'Sloane',
+      firstname: 'Austin',
+      lastname: 'Sloane',
       email: 'austin@grazerscon.com',
       phone: '555-687-9321'
     },
     {
       role: 'staff',
-      firstName: 'Haruki',
-      lastName: 'Dante',
+      firstname: 'Haruki',
+      lastname: 'Dante',
       email: 'haruki@grazerscon.com',
       phone: '555-234-0745'
     },
     {
       role: 'attendee',
-      firstName: 'Christine',
-      lastName: 'Wong',
+      firstname: 'Christine',
+      lastname: 'Wong',
       email: 'christine@randomperson.com',
       phone: '555-299-4236'
     },
     {
       role: 'staff',
-      firstName: 'Rafiqa',
-      lastName: 'Chukwudi',
+      firstname: 'Rafiqa',
+      lastname: 'Chukwudi',
       email: 'rafiqa@grazerscon.com',
       phone: '555-596-4104'
     }

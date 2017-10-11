@@ -13,8 +13,8 @@ module.exports = {
       }
     };
     this.clearInputs = () => {
-      this.firstName = '';
-      this.lastName = '';
+      this.firstname = '';
+      this.lastname = '';
       this.email = '';
       this.phone = '';
     };
