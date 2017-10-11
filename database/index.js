@@ -132,6 +132,16 @@ const getEvent = eventId =>
     FROM events
     WHERE events.id = ${eventId}`);
 
+const getSchedulesByEvent = eventId =>
+  pool.query(`SELECT *
+    FROM schedules
+    WHERE schedules.event_id = ${eventId}`);
+
+const getActivitiesByDay = scheduleId =>
+  pool.query(`SELECT *
+    FROM activities
+    WHERE activities.schedule_id = ${scheduleId}`);
+
 module.exports = {
   addUser,
   addEvent,
@@ -158,5 +168,7 @@ module.exports = {
   findGroupByUserId,
   getGroupByUser,
   getGroupsByEvent,
-  getEvent
+  getEvent,
+  getSchedulesByEvent,
+  getActivitiesByDay
 };
