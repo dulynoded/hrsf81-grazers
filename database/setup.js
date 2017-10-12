@@ -13,7 +13,8 @@ const userTable = `
     lastname VARCHAR(80),
     email VARCHAR(80),
     phone_number VARCHAR(80),
-    password VARCHAR(80)
+    password VARCHAR(80),
+    event_id VARCHAR(80)
 )`;
 
 const eventsTable = `CREATE TABLE IF NOT EXISTS events (

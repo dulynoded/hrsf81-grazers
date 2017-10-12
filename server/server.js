@@ -78,14 +78,24 @@ wss.on('connection', (ws) => {
 
 app.route('/events')
   .get((req, res) => {
-    db.getAllEvents()
-      .then((data) => {
-        res.status(200).send(data.rows);
-      })
-      .catch((err) => {
-        console.log('err in events get', err);
-      });
-    // res.status(200).send(stub.events);
+    console.log('req.query is', req.query);
+    if (req.query.id) {
+      db.getEvent(req.query.id)
+        .then((data) => {
+          res.status(200).send(data.rows);
+        })
+        .catch((err) => {
+          console.log('err in events get', err);
+        });
+    } else {
+      db.getAllEvents()
+        .then((data) => {
+          res.status(200).send(data.rows);
+        })
+        .catch((err) => {
+          console.log('err in events get', err);
+        });
+    }
   })
   .post((req, res) => {
     const newEventObj = req.body;

@@ -1,4 +1,4 @@
-function signIn($location, $http) {
+function signIn($location) {
   this.user = null;
 
   this.getUser = () => this.user;
@@ -22,9 +22,12 @@ function signIn($location, $http) {
 
   this.signUp = () =>
     (userData) => {
-      console.log('in signup service!', userData);
       this.user = userData;
-      $location.path(`/${this.user.role}`);
+      if (this.user.role !== 'organizer') {
+        $location.path(`/${this.user.role}`);
+      } else {
+        console.log('new organizer path');
+      }
     };
 }
 

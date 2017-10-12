@@ -27,6 +27,14 @@ module.exports = (passport) => {
       process.nextTick(() => {
         let userInsertId;
         let groupId;
+        const handleNormalUser = () => (
+          db.findGroup(req.body.job)
+            .then((results) => {
+              groupId = results.rows[0].id;
+              return db.addUserToGroup(groupId, userInsertId);
+            })
+        );
+
         // See if email exists
         db.findOneEmail(email)
           .then((results) => {
@@ -40,6 +48,7 @@ module.exports = (passport) => {
               role: req.body.role,
               email: req.body.email,
               phone: req.body.phone,
+              event_id: req.body.conferenceId,
             };
 
             return db.addUser(data);
@@ -47,11 +56,11 @@ module.exports = (passport) => {
           .then((results) => {
             userInsertId = results.rows[0].id;
             passport.authenticate();
-            return db.findGroup(req.body.job);
-          })
-          .then((results) => {
-            groupId = results.rows[0].id;
-            return db.addUserToGroup(groupId, userInsertId);
+            if (req.body.role === 'organizer') {
+              groupId = null;
+              return groupId;
+            }
+            return handleNormalUser();
           })
           .then(() => (
             done(null, { userId: userInsertId, groupId })

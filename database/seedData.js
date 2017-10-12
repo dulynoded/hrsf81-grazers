@@ -254,6 +254,7 @@ module.exports = {
     email: 'laurent@grazerscon.com',
     phone: '555-235-9802',
     password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
+    event_id: 1,
   },
 
   users: [
@@ -264,6 +265,7 @@ module.exports = {
       email: 'david@grazerscon.com',
       phone: '555-492-1763',
       password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
+      event_id: 1,
     },
     {
       role: 'staff',
@@ -272,6 +274,7 @@ module.exports = {
       email: 'austin@grazerscon.com',
       phone: '555-687-9321',
       password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
+      event_id: 1,
     },
     {
       role: 'staff',
@@ -280,6 +283,7 @@ module.exports = {
       email: 'haruki@grazerscon.com',
       phone: '555-234-0745',
       password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
+      event_id: 1,
     },
     {
       role: 'attendee',
@@ -288,6 +292,7 @@ module.exports = {
       email: 'christine@randomperson.com',
       phone: '555-299-4236',
       password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
+      event_id: 1,
     },
     {
       role: 'staff',
@@ -296,6 +301,7 @@ module.exports = {
       email: 'rafiqa@grazerscon.com',
       phone: '555-596-4104',
       password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
+      event_id: 1,
     }
   ],
 

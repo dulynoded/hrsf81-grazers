@@ -4,7 +4,7 @@ module.exports = {
   },
   controller() {
     // TODO: Remove hardcoding when there is proper event creation and management
-    this.eventId = 1;
+    // this.eventId = 1;
     this.view = 'broadcast';
 
     this.changeView = (view, id) => {
