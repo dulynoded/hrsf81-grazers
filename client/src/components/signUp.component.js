@@ -5,14 +5,17 @@ module.exports = {
   controller($http, $scope) {
     this.roles = [];
     this.jobs = [];
-    const eventObj = {};
+    this.events = [];
+    this.eventObj = {};
+    this.isNewEvent = false;
 
     this.loadConferences = (() => {
+      const eventObj = {};
       $http.get('/events')
         .then(response => response.data)
         .then((data) => {
-          console.log('conference data is', data);
           this.events = data;
+          this.events.push({ name: 'I want to organize an event', id: 'NEW' });
           data.forEach((event) => {
             eventObj[event.id] = { name: event.name, groupData: {} };
           });
@@ -27,7 +30,6 @@ module.exports = {
               curObj[group.type] = [group.name];
             }
           });
-          console.log('eventObj is', eventObj);
           this.eventObj = eventObj;
         })
         .catch((err) => {
@@ -35,9 +37,8 @@ module.exports = {
         });
     })();
 
-    this.loadGroupAndType = () => {
-      const typeToGroup = {};
-      return new Promise((resolve, reject) => {
+    this.loadGroupAndType = () => (
+      new Promise((resolve, reject) => {
         $http.get('/groups')
           .then(response => response.data)
           .then((data) => {
@@ -47,9 +48,8 @@ module.exports = {
             console.log('conference err is', err);
             reject(err);
           });
-      });
-    };
-
+      })
+    );
     $scope.form = {
       firstname: '',
       lastname: '',
@@ -72,11 +72,19 @@ module.exports = {
       this.jobs = this.eventObj[curConfId].groupData[$scope.form.role];
     };
 
+    this.selectChange = () => {
+      const curConf = JSON.parse($scope.form.conference);
+      if (curConf.id === 'NEW') {
+        this.isNewEvent = true;
+      } else {
+        this.isNewEvent = false;
+      }
+    };
+
     this.handleClick = () => {
-      console.log('scope form', $scope.form);
-      // $scope.form.conference = JSON.parse($scope.form.conference).name;
-      // $scope.form.role = JSON.parse($scope.form.role).name;
-      // $scope.form.job = JSON.parse($scope.form.job).name;
+      $scope.form.conference = JSON.parse($scope.form.conference).name;
+      // console.log('form is', $scope.form);
+      // return;
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {
