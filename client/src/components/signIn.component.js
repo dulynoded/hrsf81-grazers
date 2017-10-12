@@ -8,7 +8,7 @@ module.exports = {
     $scope.form = {
       password: '',
       email: '',
-    }
+    };
 
     this.error = false;
 
@@ -21,22 +21,15 @@ module.exports = {
           this.signIn(resp, false);
         })
         .catch((err) => {
-          if (err.data === false) {
-            this.error = true;
+          if (err.data.user === false) {
+            if (!err.data.info.exists) {
+              this.signIn(null, true);
+            } else {
+              this.error = true;
+            }
           }
         });
     };
-
-    // this.loadUsers = () =>
-    //   $http({
-    //     method: 'GET',
-    //     url: '/users'
-    //   })
-    //     .then(response => response.data)
-    //     .then((users) => {
-    //       this.users = users;
-    //     })
-    //     .catch(console.error);
   },
   templateUrl: 'signIn.template.html'
 };

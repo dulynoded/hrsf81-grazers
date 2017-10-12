@@ -6,136 +6,84 @@ const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = (passport) => {
   passport.serializeUser((user, done) => {
-    console.log(user.rows[0].id +" was serialized");
     done(null, user.rows[0].id);
   });
 
   // used to deserialize the user
   passport.deserializeUser((id, done) => {
-    console.log(id + "is deserialized");
     db.findUserById(id, (err, user) => {
       done(err, user);
     });
   });
 
-  passport.use('local-signup', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true // allows us to pass back the entire request to the callback
-  },
+  passport.use('local-signup', new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true
+    },
 
-  (req, email, password, done) => {
-    process.nextTick((callback) => {
-      // find a user whose email is the same as the forms email
-      // we are checking to see if the user trying to login already exists
-      let userInsertId;
-      let groupId;
+    (req, email, password, done) => {
+      process.nextTick(() => {
+        let userInsertId;
+        let groupId;
+        // See if email exists
+        db.findOneEmail(email)
+          .then((results) => {
+            if (results.rowCount > 0) {
+              return done(null, false);
+            }
+            const data = {
+              firstname: req.body.firstname,
+              lastname: req.body.lastname,
+              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
+              role: req.body.role,
+              email: req.body.email,
+              phone: req.body.phone,
+            };
+
+            return db.addUser(data);
+          })
+          .then((results) => {
+            userInsertId = results.rows[0].id;
+            passport.authenticate();
+            return db.findGroup(req.body.job);
+          })
+          .then((results) => {
+            groupId = results.rows[0].id;
+            return db.addUserToGroup(groupId, userInsertId);
+          })
+          .then(() => (
+            done(null, { userId: userInsertId, groupId })
+          ))
+          .catch((err) => {
+            throw err;
+          });
+      });
+    }
+  ));
+
+  passport.use('local-login', new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true,
+    },
+    (req, email, password, done) => {
+      // See if email exists
       db.findOneEmail(email)
         .then((results) => {
-          if (results.rowCount > 0) {
-            console.log('email taken');
-            // return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-            return done(null, false);
+          if (results.rowCount === 0) {
+            return done(null, false, { exists: false });
           }
-          // console.log('new user!');
-          const data = {
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(8), null),
-            role: req.body.role,
-            email: req.body.email,
-            phone: req.body.phone,
-          };
-
-          return db.addUser(data);
-        })
-        .then((results) => {
-          userInsertId = results.rows[0].id;
-          passport.authenticate();
-          return db.findGroup(req.body.job);
-        })
-        .then((results) => {
-          groupId = results.rows[0].id;
-          return db.addUserToGroup(groupId, userInsertId);
-        })
-        .then(() => {
-          return done(null, { userId: userInsertId, groupId });
-        })
-        .catch((err) => {
-          throw err;
+          // Authenticate password
+          const retrievedPassword = results.rows[0].password;
+          const validPassword = bcrypt.compareSync(password, retrievedPassword);
+          if (!validPassword) {
+            return done(null, false, { exists: true });
+          }
+          return done(null, results);
         });
-    });
-  }
-  ));
-
-  passport.use('local-login', new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true,
-  },
-  (req, email, password, done) => {
-    console.log('IN LOCAL LOGIN');
-    // find a user whose email is the same as the forms email
-    // we are checking to see if the user trying to login already exists
-    db.findOneEmail(email)
-      .then((results) => {
-        if (results.rowCount === 0) {
-          return done(null, false, req.flash('loginMessage', 'No user found.'));
-        }
-        // FIXME: Add bcrypt.compareSync(password, this.local.password);
-        const retrievedPassword = results.rows[0].password;
-        const validPassword = bcrypt.compareSync(password, retrievedPassword);
-        if (!validPassword) {
-          return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
-        }
-
-        return done(null, results);
-      });
-  }
+    }
   ));
 };
-
-// const passportConfig = (passport, user) => {
-//   const LocalStrategy = passportLocal.Strategy;
-//
-//   passport.use('local-signup', new LocalStrategy(
-//     {
-//       usernameField: 'firstName',
-//       passwordField: 'password',
-//       passReqToCallback: true,
-//     },
-//     (req, firstName, lastName, password, done) => {
-//       console.log('IN PASSPORT STRATEGY');
-//       const generateHash = pass => bCrypt.hashSync(pass, bCrypt.genSaltSync(8), null);
-//       db.getOneUser(firstName, lastName)
-//       .then((user) => {
-//         console.log('DB GETONE USER IS', user);
-//         if (user) {
-//           return done(null, false, { message: 'username already taken' });
-//         }
-//         const userPassword = generateHash(password);
-//         const data = {
-//           firstName,
-//           lastName,
-//           password: userPassword,
-//           role: req.body.role,
-//           email: req.body.email,
-//           phone: req.body.phone,
-//         };
-//         return db.addUser(data);
-//       })
-//       .then((newUser, created) => {
-//         if (!newUser) {
-//           return done(null, false);
-//         }
-//         console.log('User created', newUser, created);
-//         return done(null, newUser);
-//       })
-//       .catch((err) => {
-//         throw err;
-//       });
-//     }
-//   ));
-// };
-//
-// module.exports = passportConfig;

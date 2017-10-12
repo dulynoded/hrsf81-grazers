@@ -40,19 +40,13 @@ const addGroup = group =>
   );
 
 const findGroup = group =>
-  pool.query(
-    `SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}')`,
-  );
+  pool.query(`SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}')`);
 
 const findGroupById = groupId =>
-  pool.query(
-    `SELECT * FROM groups WHERE id='${groupId}'`,
-  );
+  pool.query(`SELECT * FROM groups WHERE id='${groupId}'`);
 
 const findGroupByUserId = userId =>
-  pool.query(
-    `SELECT * FROM group_user WHERE user_id='${userId}'`,
-  )
+  pool.query(`SELECT * FROM group_user WHERE user_id='${userId}'`);
 
 
 const addUserToGroup = (groupId, userId) =>
