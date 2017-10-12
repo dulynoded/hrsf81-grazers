@@ -1,6 +1,5 @@
 const AWS = require('aws-sdk');
 const secrets = require('../config/aws');
-// s3.getObject({Bucket: 'bucketName', Key: 'keyName'});
 AWS.config.update({
   accessKeyId: secrets.AWS_ACCESS_KEY_ID,
   secretAccessKey: secrets.AWS_SECRET_ACCESS_KEY,
@@ -15,7 +14,8 @@ const getSticker = () => {
   return promise.then((data) => {
     console.log(data);
     return data;
-  });
+  })
+  .catch(err => console.error(err));
 };
 
 module.exports.getSticker = getSticker;
