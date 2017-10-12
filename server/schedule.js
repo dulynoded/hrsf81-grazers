@@ -19,6 +19,9 @@ router.get('/:eventId', (req, res) => {
               const activity = actData;
               return db.getGroupNamesByActivity(activity.id)
                 .then(groups => {
+                  // assign arbitrary date to time in order to parse in front end
+                  activity.starttime = new Date(`1970-01-01T${activity.starttime}`);
+                  activity.endtime = new Date(`1970-01-01T${activity.endtime}`);
                   activity.groups = groups.rows;
                   return activity;
                 });

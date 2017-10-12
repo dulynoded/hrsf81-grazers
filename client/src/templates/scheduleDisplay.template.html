@@ -1,12 +1,12 @@
 <md-content flex>
   <md-tabs md-selected="selectedIndex" md-dynamic-height md-border-bottom>
     <md-tab ng-repeat="day in $ctrl.schedule track by $index">
-      <md-tab-label>{{day.date}}</md-tab-label>
+      <md-tab-label>{{day.date | date: 'fullDate'}}</md-tab-label>
       <md-tab-body>
         <md-list>
           <md-list-item class="md-2-line" ng-repeat="activity in day.timetable track by $index" ng-click="$ctrl.FILL_ME_IN()">
             <div class="md-list-item-text">
-              <h4 class="md-subhead">Time: {{activity.time}}</h4>
+              <h4 class="md-subhead">Time: {{activity.starttime | date:'shortTime'}} - {{activity.endtime | date:'shortTime'}}</h4>
               <h4 class="md-subhead">Activity: {{activity.activity}}</h4>
               <p class="md-body-2">Location: {{activity.location}}</p>
               <div ng-if="$ctrl.user.role === 'organizer'">

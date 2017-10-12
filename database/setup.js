@@ -33,13 +33,14 @@ const groupsTable = `CREATE TABLE IF NOT EXISTS groups (
 
 const schedulesTable = `CREATE TABLE IF NOT EXISTS schedules (
   id SERIAL UNIQUE NOT NULL PRIMARY KEY,
-  date VARCHAR(80),
+  date DATE,
   event_id SERIAL REFERENCES events(id)
 )`;
 
 const activitiesTable = `CREATE TABLE IF NOT EXISTS activities (
   id SERIAL UNIQUE NOT NULL PRIMARY KEY,
-  time VARCHAR(80),
+  starttime TIME,
+  endtime TIME,
   activity VARCHAR(80),
   location VARCHAR(80),
   schedule_id SERIAL REFERENCES schedules(id)
