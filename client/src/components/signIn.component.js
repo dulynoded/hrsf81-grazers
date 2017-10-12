@@ -1,20 +1,35 @@
 module.exports = {
   bindings: {
-    signIn: '<'
+    signIn: '<',
+    signUp: '<',
   },
-  controller($http) {
+  controller($http, $scope) {
     this.user = '';
+    $scope.form = {
+      password: '',
+      email: '',
+    };
 
-    this.loadUsers = () =>
-      $http({
-        method: 'GET',
-        url: '/users'
-      })
+    this.error = false;
+
+    this.handleClick = () => {
+      const { password } = $scope.form;
+      const { email } = $scope.form;
+      $http.get('/user/login', { params: { email, password } })
         .then(response => response.data)
-        .then((users) => {
-          this.users = users;
+        .then((resp) => {
+          this.signIn(resp, false);
         })
-        .catch(console.error);
+        .catch((err) => {
+          if (err.data.user === false) {
+            if (!err.data.info.exists) {
+              this.signIn(null, true);
+            } else {
+              this.error = true;
+            }
+          }
+        });
+    };
   },
   templateUrl: 'signIn.template.html'
 };

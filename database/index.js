@@ -5,8 +5,8 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, firstname, lastname, email, phone_number) values($1, $2, $3, $4, $5)',
-    [user.role, user.firstname, user.lastname, user.email, user.phone]
+    'INSERT INTO users(role, firstname, lastname, email, phone_number, password) values($1, $2, $3, $4, $5, $6) RETURNING id',
+    [user.role, user.firstname, user.lastname, user.email, user.phone, user.password]
   );
 
 const addEvent = event =>
@@ -39,6 +39,16 @@ const addGroup = group =>
     [group.name, group.type, group.eventId, group.scheduleId]
   );
 
+const findGroup = group =>
+  pool.query(`SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}')`);
+
+const findGroupById = groupId =>
+  pool.query(`SELECT * FROM groups WHERE id='${groupId}'`);
+
+const findGroupByUserId = userId =>
+  pool.query(`SELECT * FROM group_user WHERE user_id='${userId}'`);
+
+
 const addUserToGroup = (groupId, userId) =>
   pool.query(
     'INSERT INTO group_user(group_id, user_id) values($1, $2)',
@@ -57,6 +67,17 @@ const addMessage = (message) => {
 
 const getAllUsers = () =>
   pool.query('SELECT * FROM users');
+
+const getOneUser = (firstname, lastname) =>
+  pool.query(`SELECT * FROM users WHERE firstname='${firstname}' AND lastname='${lastname}'`);
+
+const findOneEmail = email =>
+  pool.query(`SELECT * FROM users WHERE email='${email}'`);
+
+  // pool.query(`select exists (select true from users where email="${email}")`);
+
+const findUserById = id =>
+  pool.query(`SELECT * FROM users WHERE id='${id}'`);
 
 const getAllEvents = () =>
   pool.query('SELECT * FROM events');
@@ -107,6 +128,7 @@ module.exports = {
   addUserToGroup,
   addMessage,
   getAllUsers,
+  getOneUser,
   getAllEvents,
   getAllSchedules,
   getAllActivities,
@@ -114,5 +136,10 @@ module.exports = {
   getAllMessages,
   getMessages,
   getUsersByGroup,
-  getGroupsByEvent
+  getGroupsByEvent,
+  findUserById,
+  findOneEmail,
+  findGroup,
+  findGroupById,
+  findGroupByUserId,
 };

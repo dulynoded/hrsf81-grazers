@@ -1,11 +1,42 @@
 const express = require('express');
+const passport = require('passport');
 const stub = require('./stubData.js');
+const db = require('../database/index');
 
 const router = express.Router();
 
 router.use((req, res, next) => {
-  console.log('Handing /user routes');
   next();
+});
+
+router.post('/', (req, res, next) => {
+  passport.authenticate('local-signup', (err, user, info) => {
+    console.log('err', err);
+    console.log('user', user);
+    console.log('info', info);
+    if (err) {
+      return next(err);
+    }
+    if (user === false) {
+      return res.status(300).send(user);
+    }
+    return res.status(200).send(user);
+  })(req, res, next);
+});
+
+router.get('/login', (req, res, next) => {
+  passport.authenticate('local-login', (err, user, info) => {
+    console.log('err', err);
+    console.log('user', user);
+    console.log('info', info);
+    if (err) {
+      return next(err);
+    }
+    if (user === false) {
+      return res.status(300).send({ user, info });
+    }
+    return res.status(200).send(user.rows[0]);
+  })(req, res, next);
 });
 
 router.route('/:userId')
@@ -27,21 +58,20 @@ router.route('/:userId')
 
 router.get('/:userId/group', (req, res) => {
   const userId = Number(req.params.userId);
-  let userGroup;
-  for (let i = 0; i < stub.userGroups.length; i += 1) {
-    if (stub.userGroups[i].userId === userId) {
-      userGroup = stub.userGroups[i];
-      break;
-    }
-  }
-  let group;
-  for (let i = 0; i < stub.groups.length; i += 1) {
-    if (stub.groups[i].id === userGroup.groupId) {
-      group = stub.groups[i];
-      break;
-    }
-  }
-  res.status(200).send(group);
+  db.findGroupByUserId(userId)
+    .then((results) => {
+      const groupId = results.rows[0].group_id;
+      return db.findGroupById(groupId);
+    })
+    .then((results) => {
+      return results.rows[0];
+    })
+    .then((groupData) => {
+      res.status(200).send(groupData);
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 module.exports = router;

@@ -8,6 +8,7 @@ module.exports = {
     this.$onInit = function init() {
       groups.getGroup(this.user.id)
         .then((group) => {
+          console.log('group is', group);
           this.group = group;
         })
         .catch(console.error);
