@@ -22,7 +22,8 @@ module.exports = {
               message.fromName = `${message.firstname} ${message.lastname}`;
               message.recipients = message.togroups.split('|');
               message.timestamp = new Date(Date.parse(message.date_time));
-              message.pic = 'https://www.outerspaceuniverse.org/wp-content/uploads/venus.jpg';
+              // message.pic = 'https://www.outerspaceuniverse.org/wp-content/uploads/venus.jpg';
+              message.pic = message.media;
               return message;
             });
           })
