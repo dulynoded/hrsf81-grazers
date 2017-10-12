@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('../database/index');
-const AWS = require('aws-sdk');
-
+const aws = require('./helpers/aws')
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -10,6 +9,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
+  aws.getSticker();
   db.getAllMessages()
     .then((result) => {
       res.status(200).send(result.rows);
