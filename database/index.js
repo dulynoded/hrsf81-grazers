@@ -74,8 +74,6 @@ const getOneUser = (firstname, lastname) =>
 const findOneEmail = email =>
   pool.query(`SELECT * FROM users WHERE email='${email}'`);
 
-  // pool.query(`select exists (select true from users where email="${email}")`);
-
 const findUserById = id =>
   pool.query(`SELECT * FROM users WHERE id='${id}'`);
 
@@ -155,6 +153,12 @@ const getActivitiesByDayByGroup = (scheduleId, groupId) =>
     ON group_activity.group_id = groups.id
     WHERE group_activity.group_id = ${groupId})`); // TODO: sort by time
 
+const getAllAttendees = () =>
+  pool.query("SELECT * FROM users where role = 'attendee'");
+
+const getAttendeesById = userId =>
+  pool.query(`SELECT * FROM users where role = 'attendee' and id = ${userId}`);
+
 module.exports = {
   addUser,
   addEvent,
@@ -185,4 +189,6 @@ module.exports = {
   getSchedulesByEvent,
   getActivitiesByDay,
   getActivitiesByDayByGroup
+  getAllAttendees,
+  getAttendeesById,
 };

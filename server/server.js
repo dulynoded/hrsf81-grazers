@@ -19,6 +19,7 @@ const group = require('./group');
 const user = require('./user');
 const messages = require('./messages');
 const schedule = require('./schedule');
+const attendee = require('./attendee');
 const stub = require('./stubData');
 
 require('./config/passport.js')(passport);
@@ -53,6 +54,7 @@ app.use('/group', group);
 app.use('/user', user);
 app.use('/messages', messages);
 app.use('/schedule', schedule);
+app.use('/attendee', attendee);
 
 
 // const wsKeepAlive = () => {
