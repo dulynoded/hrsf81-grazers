@@ -105,7 +105,7 @@ const getMessages = (fromId, toId) =>
      ORDER BY date_time`);
 
 const getUsersByGroup = groupId =>
-  pool.query(`SELECT users.* AS camel_case
+  pool.query(`SELECT users.*
     FROM users
     INNER JOIN group_user
     ON users.id = group_user.user_id
@@ -113,10 +113,47 @@ const getUsersByGroup = groupId =>
     ON group_user.group_id = groups.id
     WHERE group_user.group_id = ${groupId}`);
 
+const getGroupByUser = userId =>
+pool.query(`SELECT groups.*
+    FROM groups
+    INNER JOIN group_user
+    ON groups.id = group_user.group_id
+    INNER JOIN users
+    ON group_user.user_id = users.id
+    WHERE group_user.user_id = ${userId}`);
+
 const getGroupsByEvent = eventId =>
   pool.query(`SELECT *
     FROM groups
     WHERE groups.event_id = ${eventId}`);
+
+const getEvent = eventId =>
+  pool.query(`SELECT *
+    FROM events
+    WHERE events.id = ${eventId}`);
+
+const getSchedulesByEvent = eventId =>
+  pool.query(`SELECT *
+    FROM schedules
+    WHERE schedules.event_id = ${eventId}`); // TODO: sort by date
+
+const getActivitiesByDay = scheduleId =>
+  pool.query(`SELECT *
+    FROM activities
+    WHERE activities.schedule_id = ${scheduleId}`); // TODO: sort by time
+
+const getActivitiesByDayByGroup = (scheduleId, groupId) =>
+  pool.query(`(SELECT activities.*
+    FROM activities
+    WHERE activities.schedule_id = ${scheduleId})
+    INTERSECT
+    (SELECT activities.*
+    FROM activities
+    INNER JOIN group_activity
+    ON activities.id = group_activity.activity_id
+    INNER JOIN groups
+    ON group_activity.group_id = groups.id
+    WHERE group_activity.group_id = ${groupId})`); // TODO: sort by time
 
 module.exports = {
   addUser,
@@ -142,4 +179,10 @@ module.exports = {
   findGroup,
   findGroupById,
   findGroupByUserId,
+  getGroupByUser,
+  getGroupsByEvent,
+  getEvent,
+  getSchedulesByEvent,
+  getActivitiesByDay,
+  getActivitiesByDayByGroup
 };
