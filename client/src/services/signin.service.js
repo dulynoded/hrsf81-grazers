@@ -8,7 +8,6 @@ function signIn($location, $http) {
       if (signupRedirect) {
         $location.path('/signup');
       } else {
-        // this.user = JSON.parse(user);
         this.user = user;
         $location.path(`/${this.user.role}`);
       }
