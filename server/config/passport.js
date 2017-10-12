@@ -71,14 +71,17 @@ module.exports = (passport) => {
     },
     (req, email, password, done) => {
       // See if email exists
+      console.log('email to test is', email);
       db.findOneEmail(email)
         .then((results) => {
+          console.log('findOneEmail results', results.rowCount);
           if (results.rowCount === 0) {
             return done(null, false, { exists: false });
           }
           // Authenticate password
           const retrievedPassword = results.rows[0].password;
           const validPassword = bcrypt.compareSync(password, retrievedPassword);
+          console.log('valid password', validPassword);
           if (!validPassword) {
             return done(null, false, { exists: true });
           }
