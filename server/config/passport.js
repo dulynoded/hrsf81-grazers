@@ -52,11 +52,9 @@ module.exports = (passport) => {
         .then((results) => {
           userInsertId = results.rows[0].id;
           passport.authenticate();
-          console.log('job is', req.body.job);
           return db.findGroup(req.body.job);
         })
         .then((results) => {
-          console.log('find results are', results);
           groupId = results.rows[0].id;
           return db.addUserToGroup(groupId, userInsertId);
         })
@@ -76,6 +74,7 @@ module.exports = (passport) => {
     passReqToCallback: true,
   },
   (req, email, password, done) => {
+    console.log('IN LOCAL LOGIN');
     // find a user whose email is the same as the forms email
     // we are checking to see if the user trying to login already exists
     db.findOneEmail(email)
@@ -84,7 +83,11 @@ module.exports = (passport) => {
           return done(null, false, req.flash('loginMessage', 'No user found.'));
         }
         // FIXME: Add bcrypt.compareSync(password, this.local.password);
-        if (!results.validPassword(password)) {
+        const retrievedPassword = results.rows[0].password;
+        const validPassword = bcrypt.compareSync(password, retrievedPassword);
+        console.log('retrievedPassword', retrievedPassword);
+        console.log('validPassword', validPassword);
+        if (!validPassword) {
           return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
         }
 

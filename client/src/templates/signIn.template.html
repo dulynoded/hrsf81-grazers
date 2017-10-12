@@ -1,18 +1,23 @@
 <div flex layout="column" layout-align="center center" class="signin container">
-  <div layout="column" layout-align="center center" layout-padding md-whiteframe="5" class="signin-form">
-    <form flex layout="row" layout-align="end center" layout-wrap layout-padding>
-      <h1 flex="100" class="md-display-2">Please sign in.</h1>
-      <md-input-container flex="100">
-        <md-select id="userSelect" required ng-model="$ctrl.user" md-on-open="$ctrl.loadUsers()" placeholder="Who are you?">
-          <md-option ng-repeat="user in $ctrl.users track by user.id" value={{user}}>{{user.firstname}} {{user.lastname}}</md-option>
-        </md-select>
-      </md-input-container>
-      <md-input-container flex="100">
-        <label for="password">&nbsp;&nbsp;Password</label>
-        <input id="password" autocomplete="off" type="password"/>
-      </md-input-container>
-      <md-button class="md-accent md-raised" aria-label="Sign In" ng-click="$ctrl.signIn($ctrl.user)">Sign In</md-button>
-      <md-button class="md-accent md-raised" aria-label="Sign Up" ng-click="$ctrl.signUp()">Sign Up</md-button>
-    </form>
-  </div>
+    <div layout="column" layout-align="center center" layout-padding md-whiteframe="5" class="signin-form">
+        <form flex layout="row" layout-align="end center" layout-wrap>
+            <h1 flex="100" class="md-display-2">Please sign in.</h1>
+            <md-input-container flex="100">
+                <md-select id="userSelect" required ng-model="$ctrl.user" md-on-open="$ctrl.loadUsers()" placeholder="Who are you?">
+                    <md-option ng-repeat="user in $ctrl.users track by user.id" value={{user}}>{{user.firstname}} {{user.lastname}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex="100">
+                <label for="password">&nbsp;&nbsp;Password</label>
+                <input id="password" autocomplete="off" type="password" ng-model="form.password"/>
+            </md-input-container>
+            <div ng-if="$ctrl.error" role="alert">
+                <br />Incorrect password, try again!
+            </div>
+            <div>
+                <md-button class="md-accent md-raised" aria-label="Sign In" ng-click="$ctrl.handleClick()">Sign In</md-button>
+                <md-button class="md-accent md-raised" aria-label="Sign Up" ng-click="$ctrl.signUp()">Sign Up</md-button>
+            </div>
+        </form>
+    </div>
 </div>

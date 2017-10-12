@@ -12,9 +12,24 @@ router.use((req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  console.log('in post')
-  console.log('req body is', req.body);
   passport.authenticate('local-signup', (err, user, info) => {
+    console.log('err', err);
+    console.log('user', user);
+    console.log('info', info);
+    if (err) {
+      return next(err);
+    }
+    if (user === false) {
+      res.status(300).send(user);
+    } else {
+      res.status(200).send(user);
+    }
+  })(req, res, next);
+});
+
+router.get('/login', (req, res, next) => {
+  console.log('req.body is', req.body);
+  passport.authenticate('local-login', (err, user, info) => {
     console.log('err', err);
     console.log('user', user);
     console.log('info', info);

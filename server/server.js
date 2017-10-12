@@ -95,7 +95,13 @@ app.get('/groups', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
-  res.status(200).send(stub.users);
+  db.getAllUsers()
+    .then((results) => {
+      res.status(200).send(results.rows);
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 // send back to client for route handling

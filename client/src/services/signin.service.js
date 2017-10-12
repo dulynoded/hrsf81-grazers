@@ -1,13 +1,16 @@
-function signIn($location) {
+function signIn($location, $http) {
   this.user = null;
 
   this.getUser = () => this.user;
 
   this.submit = () => (
-    (user) => {
-      console.log('user is', user);
-      this.user = JSON.parse(user);
-      $location.path(`/${this.user.role}`);
+    (user, signupRedirect) => {
+      if (signupRedirect) {
+        $location.path('/signup');
+      } else {
+        this.user = JSON.parse(user);
+        $location.path(`/${this.user.role}`);
+      }
     }
   );
 
