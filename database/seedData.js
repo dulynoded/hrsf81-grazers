@@ -6,6 +6,12 @@ module.exports = {
       location: '944 Market Street, 8th floor, San Francisco, CA 94102',
       organizerId: 1,
       scheduleId: 1
+    },
+    {
+      name: 'Star Wars Con',
+      location: 'Hoth',
+      organizerId: 1,
+      scheduleId: 2,
     }
   ],
 
@@ -141,6 +147,16 @@ module.exports = {
       name: 'General Admissions',
       type: 'attendee',
       eventId: 1,
+    },
+    {
+      name: 'Wookies',
+      type: 'staff',
+      eventId: 2,
+    },
+    {
+      name: 'Ewoks',
+      type: 'attendee',
+      eventId: 2,
     }
   ],
 
