@@ -10,6 +10,20 @@ module.exports = {
 
     this.loadConferences = () => {
       console.log('loading conferences');
+      $http.get('/user', $scope.form)
+        .then(response => response.data)
+        .then((data) => {
+          const userData = Object.assign(
+            {},
+            $scope.form,
+            { id: data.userId, group_id: data.groupId }
+          );
+          this.signUp(userData);
+        })
+        .catch((err) => {
+          // TODO: This email is already taken, try again.
+          console.log('err is', err);
+        });
     };
 
     this.loadRoles = () => {
