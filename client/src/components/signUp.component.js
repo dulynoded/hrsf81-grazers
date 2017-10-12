@@ -26,7 +26,6 @@ module.exports = {
     };
     this.handleClick = () => {
       $scope.form.conference = JSON.parse($scope.form.conference).name;
-      // FIXME: Need to include staff/organizer role and job
       $scope.form.role = JSON.parse($scope.form.role).name;
       $scope.form.job = JSON.parse($scope.form.job).name;
       $http.post('/user', $scope.form)
@@ -39,24 +38,11 @@ module.exports = {
           );
           this.signUp(userData);
         })
-        .catch(err => {
+        .catch((err) => {
           // TODO: This email is already taken, try again.
           console.log('err is', err);
         });
-
     };
-
-    // this.loadUsers = () =>
-    // $http({
-    //   method: 'GET',
-    //   url: '/users'
-    // })
-    // .then(response => response.data)
-    // .then((users) => {
-    //   this.users = users;
-    // })
-    // .catch(console.error);
-
   },
   templateUrl: 'signUp.template.html'
 };
