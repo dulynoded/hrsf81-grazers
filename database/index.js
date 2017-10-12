@@ -58,8 +58,8 @@ const addUserToGroup = (groupId, userId) =>
 const addMessage = (message) => {
   const messageInserts = message.toIds.map(recipientId =>
     pool.query(
-      'INSERT INTO messages(from_user_id, to_group_id, title, text, event_id, date_time, msg_group_id) values($1, $2, $3, $4, $5, $6, $7)',
-      [message.fromId, recipientId, message.title, message.text, message.eventId, message.timestamp, message.msgGroupId]
+      'INSERT INTO messages(from_user_id, to_group_id, title, text, media, event_id, date_time, msg_group_id) values($1, $2, $3, $4, $5, $6, $7, $8)',
+      [message.fromId, recipientId, message.title, message.text, message.media, message.eventId, message.timestamp, message.msgGroupId]
     ));
 
   return Promise.all(messageInserts);

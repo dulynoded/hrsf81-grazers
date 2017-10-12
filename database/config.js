@@ -1,6 +1,6 @@
 // The following was used in dev
 const config = {
-  user: 'a_grazer',
+  user: 'administrator',
   host: 'localhost',
   database: 'event_hud',
   password: null,

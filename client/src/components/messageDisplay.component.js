@@ -5,7 +5,6 @@ module.exports = {
   },
   controller(websockets, $http) {
     this.messages = [];
-
     this.$onChanges = (changesObj) => {
       if (changesObj.group.currentValue || changesObj.user.currentValue) {
         this.fetchUrl = this.user.role === 'organizer' ?
@@ -23,6 +22,7 @@ module.exports = {
               message.fromName = `${message.firstname} ${message.lastname}`;
               message.recipients = message.togroups.split('|');
               message.timestamp = new Date(Date.parse(message.date_time));
+              message.pic = 'https://www.outerspaceuniverse.org/wp-content/uploads/venus.jpg';
               return message;
             });
           })
