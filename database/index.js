@@ -153,6 +153,15 @@ const getActivitiesByDayByGroup = (scheduleId, groupId) =>
     ON group_activity.group_id = groups.id
     WHERE group_activity.group_id = ${groupId})`); // TODO: sort by time
 
+const getGroupNamesByActivity = activityId =>
+  pool.query(`SELECT groups.*
+    FROM groups
+    INNER JOIN group_activity
+    ON groups.id = group_activity.group_id
+    INNER JOIN activities
+    ON group_activity.activity_id = activities.id
+    WHERE group_activity.activity_id = ${activityId}`); //
+
 const getAllAttendees = () =>
   pool.query("SELECT * FROM users where role = 'attendee'");
 
@@ -188,6 +197,7 @@ module.exports = {
   getSchedulesByEvent,
   getActivitiesByDay,
   getActivitiesByDayByGroup,
+  getGroupNamesByActivity,
   getAllAttendees,
   getAttendeesById,
 };

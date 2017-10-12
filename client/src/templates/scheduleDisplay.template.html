@@ -4,11 +4,14 @@
       <md-tab-label>{{day.date}}</md-tab-label>
       <md-tab-body>
         <md-list>
-          <md-list-item class="md-3-line" ng-repeat="activity in day.timetable track by $index">
+          <md-list-item class="md-2-line" ng-repeat="activity in day.timetable track by $index">
             <div class="md-list-item-text">
               <h4 class="md-subhead">Time: {{activity.time}}</h4>
               <h4 class="md-subhead">Activity: {{activity.activity}}</h4>
               <p class="md-body-2">Location: {{activity.location}}</p>
+              <div ng-if="$ctrl.user.role === 'organizer'">
+                <span ng-repeat="group in activity.groups track by $index" class="md-caption group">{{group.name}}</span>
+              </div>
             </div>
           </md-list-item>
         </md-list>

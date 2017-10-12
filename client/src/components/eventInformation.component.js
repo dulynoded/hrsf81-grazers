@@ -1,7 +1,8 @@
 module.exports = {
   bindings: {
     eventId: '<',
-    group: '<'
+    group: '<',
+    user: '<'
   },
   controller($http) {
     this.displayedSchedule = 'event';
@@ -25,6 +26,7 @@ module.exports = {
           return this.getSchedule(this.eventId);
         })
         .then((schedule) => {
+          console.log('event schedule', schedule);
           this.eventSchedule = schedule;
         })
         .catch(console.error);

@@ -78,6 +78,16 @@ md-list-item.md-3-line.md-long-text {
   font-variant: small-caps;
 }
 
+.group {
+  margin-top: 8px;
+  margin-right: 8px;
+  padding: 3px;
+  background-color: #c9d1d5;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  font-variant: small-caps;
+}
+
 #hack {
   display: none;
 }

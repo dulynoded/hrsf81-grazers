@@ -12,6 +12,6 @@
         ng-class="{'selected': $ctrl.displayedSchedule === 'event'}">Event Schedule</md-button>
     </div>
     <schedule-display ng-if="$ctrl.groupSchedule && $ctrl.displayedSchedule === 'group'" schedule="$ctrl.groupSchedule"></schedule-display>
-    <schedule-display ng-if="$ctrl.displayedSchedule === 'event'" schedule="$ctrl.eventSchedule"></schedule-display>
+    <schedule-display ng-if="$ctrl.displayedSchedule === 'event'" schedule="$ctrl.eventSchedule" user="$ctrl.user"></schedule-display>
   </div>
 </div>

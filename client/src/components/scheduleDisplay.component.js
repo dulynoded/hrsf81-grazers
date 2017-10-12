@@ -1,7 +1,8 @@
 module.exports = {
   bindings: {
     heading: '@',
-    schedule: '<'
+    schedule: '<',
+    user: '<'
   },
   controller() {
     this.selectedIndex = 0;
