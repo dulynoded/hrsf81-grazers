@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../database/index');
+const AWS = require('aws-sdk');
 
 const router = express.Router();
 
