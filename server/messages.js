@@ -9,7 +9,6 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  aws.getSticker();
   db.getAllMessages()
     .then((result) => {
       res.status(200).send(result.rows);
