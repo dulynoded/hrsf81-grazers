@@ -45,7 +45,8 @@ module.exports = {
         user: this.user,
         messageTitle: this.messageTitle,
         messageTo: this.messageTo,
-        messageBody: this.messageBody
+        messageBody: this.messageBody,
+        messageMedia: this.messageMedia
       };
 
       groups.get()
@@ -62,6 +63,7 @@ module.exports = {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;
         this.messageBody = $scope.msg.messageBody;
+        this.messageMedia = $scope.msg.media;
         $mdDialog.hide();
       };
     };
@@ -79,6 +81,8 @@ module.exports = {
         toIds: toGroupIds,
         title: this.messageTitle,
         text: this.messageBody,
+        // add media property here
+        media: this.messageMedia,
         fromName: `${this.user.firstname} ${this.user.lastname}`,
         fromId: this.user.id,
         eventId: 1

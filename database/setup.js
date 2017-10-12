@@ -63,6 +63,7 @@ const messagesTable = `CREATE TABLE IF NOT EXISTS messages (
   to_group_id SERIAL REFERENCES groups(id),
   title VARCHAR(80) NOT NULL,
   text VARCHAR(140),
+  media VARCHAR(140),
   event_id SERIAL REFERENCES events(id),
   date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   msg_group_id INTEGER

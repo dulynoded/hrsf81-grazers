@@ -5,7 +5,6 @@ module.exports = {
   },
   controller(websockets, $http) {
     this.messages = [];
-
     this.$onChanges = (changesObj) => {
       if (changesObj.group.currentValue || changesObj.user.currentValue) {
         this.fetchUrl = this.user.role === 'organizer' ?
