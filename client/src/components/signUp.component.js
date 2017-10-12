@@ -3,31 +3,42 @@ module.exports = {
     signUp: '<',
   },
   controller($http, $scope) {
-    this.user = 'Test';
-    this.conferences = [{ name: 'test conference', id: 1 }, { name: 'test2 conference', id: 2 }];
-    this.roles = [{ name: 'organizer', id: 1 }, { name: 'staff', id: 2 }];
-    this.jobs = [{ name: 'volunteers', id: 1 }, { name: 'greeters', id: 2 }];
+    this.roles = [];
+    this.jobs = [];
 
-    this.loadConferences = () => {
-      console.log('loading conferences');
-      $http.get('/user', $scope.form)
+    this.loadConferences = (() => {
+      $http.get('/events')
         .then(response => response.data)
         .then((data) => {
-          const userData = Object.assign(
-            {},
-            $scope.form,
-            { id: data.userId, group_id: data.groupId }
-          );
-          this.signUp(userData);
+          // console.log('conference data is', data);
+          this.conferences = data;
+          this.loadGroupAndType();
         })
         .catch((err) => {
-          // TODO: This email is already taken, try again.
-          console.log('err is', err);
+          console.log('conference err is', err);
         });
-    };
+    })();
 
-    this.loadRoles = () => {
-      console.log('loading roles');
+    this.loadGroupAndType = () => {
+      const typeToGroup = {};
+      $http.get('/groups')
+        .then(response => response.data)
+        .then((data) => {
+          console.log('group data is', data);
+          data.forEach((group) => {
+            if (typeToGroup[group.type]) {
+              typeToGroup[group.type].push(group.name);
+            } else {
+              typeToGroup[group.type] = [group.name];
+            }
+          });
+          console.log('typeToGroup is', typeToGroup);
+          this.roles = Object.keys(typeToGroup);
+          this.jobs = typeToGroup;
+        })
+        .catch((err) => {
+          console.log('conference err is', err);
+        });
     };
 
     $scope.form = {

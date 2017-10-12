@@ -73,12 +73,19 @@ wss.on('connection', (ws) => {
     }
   });
 
-  //setInterval(wsKeepAlive, 5000);
+  // setInterval(wsKeepAlive, 5000);
 });
 
 app.route('/events')
   .get((req, res) => {
-    res.status(200).send(stub.events);
+    db.getAllEvents()
+      .then((data) => {
+        res.status(200).send(data.rows);
+      })
+      .catch((err) => {
+        console.log('err in events get', err);
+      });
+    // res.status(200).send(stub.events);
   })
   .post((req, res) => {
     const newEventObj = req.body;
@@ -86,7 +93,14 @@ app.route('/events')
   });
 
 app.get('/groups', (req, res) => {
-  res.status(200).send(stub.groups);
+  db.getAllGroups()
+    .then((data) => {
+      res.status(200).send(data.rows);
+    })
+    .catch((err) => {
+      console.log('err in groups get', err);
+    });
+  // res.status(200).send(stub.groups);
 });
 
 app.get('/users', (req, res) => {

@@ -236,7 +236,8 @@ module.exports = {
     firstname: 'Laurent',
     lastname: 'Frazier',
     email: 'laurent@grazerscon.com',
-    phone: '555-235-9802'
+    phone: '555-235-9802',
+    password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
   },
 
   users: [
@@ -245,35 +246,40 @@ module.exports = {
       firstname: 'David',
       lastname: 'Friedman',
       email: 'david@grazerscon.com',
-      phone: '555-492-1763'
+      phone: '555-492-1763',
+      password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
     },
     {
       role: 'staff',
       firstname: 'Austin',
       lastname: 'Sloane',
       email: 'austin@grazerscon.com',
-      phone: '555-687-9321'
+      phone: '555-687-9321',
+      password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
     },
     {
       role: 'staff',
       firstname: 'Haruki',
       lastname: 'Dante',
       email: 'haruki@grazerscon.com',
-      phone: '555-234-0745'
+      phone: '555-234-0745',
+      password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
     },
     {
       role: 'attendee',
       firstname: 'Christine',
       lastname: 'Wong',
       email: 'christine@randomperson.com',
-      phone: '555-299-4236'
+      phone: '555-299-4236',
+      password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
     },
     {
       role: 'staff',
       firstname: 'Rafiqa',
       lastname: 'Chukwudi',
       email: 'rafiqa@grazerscon.com',
-      phone: '555-596-4104'
+      phone: '555-596-4104',
+      password: '$2a$08$4Crout.sX8BOIZY72Wtk1uGciTEr8BP2cu7Q8MH9vd1s1yMZ.8VwW',
     }
   ],
 
