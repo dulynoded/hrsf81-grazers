@@ -17,7 +17,7 @@ const sendMessage = (user = 'aaa') => {
       if (err) {
         reject(err);
       }
-      console.log('message', message);
+      // console.log('message', message);
       resolve(message.sid);
     });
   });

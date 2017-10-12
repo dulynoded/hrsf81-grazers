@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
       res.status(201).send();
       sendMessage(attendeeParams)
         .then((data) => {
-          console.log(data);
+          // console.log(data);
         });
     })
     .catch((err) => {
