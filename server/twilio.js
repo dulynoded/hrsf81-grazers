@@ -2,11 +2,10 @@ const Promise = require('bluebird');
 const config = require('./config');
 
 const { accountSid, authToken } = config;
-
-// require the Twilio module and create a REST client
 const client = require('twilio')(accountSid, authToken);
 
-const accessCode = 7239;
+// random 4 digit code, later for verification
+const accessCode = Math.floor(9999 * Math.random());
 
 const sendMessage = (user = 'aaa') => {
   return new Promise((resolve, reject) => {

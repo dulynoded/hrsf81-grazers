@@ -112,7 +112,7 @@ const getUsersByGroup = groupId =>
     WHERE group_user.group_id = ${groupId}`);
 
 const getGroupByUser = userId =>
-pool.query(`SELECT groups.*
+  pool.query(`SELECT groups.*
     FROM groups
     INNER JOIN group_user
     ON groups.id = group_user.group_id
@@ -184,11 +184,10 @@ module.exports = {
   findGroupById,
   findGroupByUserId,
   getGroupByUser,
-  getGroupsByEvent,
   getEvent,
   getSchedulesByEvent,
   getActivitiesByDay,
-  getActivitiesByDayByGroup
+  getActivitiesByDayByGroup,
   getAllAttendees,
   getAttendeesById,
 };
