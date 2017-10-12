@@ -2,10 +2,14 @@
     <div layout="column" layout-align="center center" layout-padding md-whiteframe="5" class="signin-form">
         <form flex layout="row" layout-align="end center" layout-wrap>
             <h1 flex="100" class="md-display-2">Please sign in.</h1>
-            <md-input-container flex="100">
+            <!-- <md-input-container flex="100">
                 <md-select id="userSelect" required ng-model="$ctrl.user" md-on-open="$ctrl.loadUsers()" placeholder="Who are you?">
                     <md-option ng-repeat="user in $ctrl.users track by user.id" value={{user}}>{{user.firstname}} {{user.lastname}}</md-option>
                 </md-select>
+            </md-input-container> -->
+            <md-input-container flex="100">
+                <label for="email">Email</label>
+                <input id="email" autocomplete="off" type="email" ng-model="form.email"/>
             </md-input-container>
             <md-input-container flex="100">
                 <label for="password">&nbsp;&nbsp;Password</label>

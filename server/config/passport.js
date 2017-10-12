@@ -85,8 +85,6 @@ module.exports = (passport) => {
         // FIXME: Add bcrypt.compareSync(password, this.local.password);
         const retrievedPassword = results.rows[0].password;
         const validPassword = bcrypt.compareSync(password, retrievedPassword);
-        console.log('retrievedPassword', retrievedPassword);
-        console.log('validPassword', validPassword);
         if (!validPassword) {
           return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
         }

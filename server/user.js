@@ -39,7 +39,7 @@ router.get('/login', (req, res, next) => {
     if (user === false) {
       res.status(300).send(user);
     } else {
-      res.status(200).send(user);
+      res.status(200).send(user.rows[0]);
     }
   })(req, res, next);
 });

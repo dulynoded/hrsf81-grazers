@@ -7,18 +7,20 @@ module.exports = {
     this.user = '';
     $scope.form = {
       password: '',
+      email: '',
     }
 
     this.error = false;
 
     this.handleClick = () => {
-      const user = JSON.parse(this.user);
+      // const user = JSON.parse(this.user);
       const { password } = $scope.form;
-      $http.get('/user/login', { params: { email: user.email, password } })
+      const { email } = $scope.form;
+      $http.get('/user/login', { params: { email, password } })
         .then(response => response.data)
         .then((resp) => {
           console.log('response is', resp);
-          this.signin(user, false);
+          this.signIn(resp, false);
         })
         .catch((err) => {
           if (err.data === false) {
