@@ -7,7 +7,7 @@
   <div class="schedule">
     <div flex layout="row" layout-align="start center">
       <md-button class="schedule-button" flex="auto" ng-if="$ctrl.groupSchedule" ng-click="$ctrl.showSchedule('group')"
-        ng-class="{'selected': $ctrl.displayedSchedule === 'group'}">Group Schedule</md-button>
+        ng-class="{'selected': $ctrl.displayedSchedule === 'group'}">{{$ctrl.group.name}} Schedule</md-button>
       <md-button class="schedule-button" flex="auto" ng-click="$ctrl.showSchedule('event')"
         ng-class="{'selected': $ctrl.displayedSchedule === 'event'}">Event Schedule</md-button>
     </div>
