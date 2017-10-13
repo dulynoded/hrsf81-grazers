@@ -15,6 +15,7 @@ module.exports = {
     $scope.form = {
       name: '',
       group: '',
+      location: '',
     };
 
     // Add groups to staff role
@@ -28,6 +29,7 @@ module.exports = {
       const obj = {
         start_date: this.startDate.toString(),
         end_date: this.endDate.toString(),
+        location: $scope.form.location,
         groups: this.groups,
         organizer_id: this.user.id,
         name: $scope.form.name,

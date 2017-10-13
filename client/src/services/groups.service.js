@@ -16,7 +16,7 @@ function groups($http) {
       .then(response => response.data)
       .catch(console.error);
 
-  this.getGroup = (userId, groupId) =>
+  this.getGroup = userId =>
     $http({
       method: 'GET',
       url: `/user/${userId}/group`
