@@ -67,7 +67,7 @@ module.exports = {
       const curConfId = curConf.id;
       this.roles = Object.keys(this.eventObj[curConfId].groupData);
       const organizerInd = this.roles.indexOf('organizer');
-      if (organizerInd > -1) { this.roles.splice(organizerInd, 1) };
+      if (organizerInd > -1) { this.roles.splice(organizerInd, 1); }
     };
 
     this.loadJobs = () => {
@@ -86,9 +86,12 @@ module.exports = {
     };
 
     this.handleClick = () => {
+      // TODO: remove conference and conferenceId?
       $scope.form.conferenceId = JSON.parse($scope.form.conferenceInput).id;
+      $scope.form.event_id = JSON.parse($scope.form.conferenceInput).id;
       // $scope.form.conferenceName = JSON.parse($scope.form.conference).name;
       $scope.form.conference = JSON.parse($scope.form.conferenceInput).name;
+      $scope.form.event = JSON.parse($scope.form.conferenceInput).name;
       if (this.isNewEvent) {
         $scope.form.conference = '';
         $scope.form.role = 'organizer';
