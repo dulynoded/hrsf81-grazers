@@ -7,6 +7,16 @@ router.use((req, res, next) => {
   next();
 });
 
+router.route('/')
+  .get((req, res) => {
+    res.status(200).send();
+  })
+  .post((req, res) => {
+    const { date, event_id } = req.body;
+    db.addSchedule({ date, event_id })
+      .then(data => res.status(201).send(data.rows[0]));
+  });
+
 router.get('/:eventId', (req, res) => {
   const { eventId } = req.params;
   db.getSchedulesByEvent(eventId)

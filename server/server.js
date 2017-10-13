@@ -19,6 +19,7 @@ const group = require('./group');
 const user = require('./user');
 const messages = require('./messages');
 const schedule = require('./schedule');
+const activity = require('./activity');
 const attendee = require('./attendee');
 const stub = require('./stubData');
 
@@ -47,6 +48,7 @@ app.use('/group', group);
 app.use('/user', user);
 app.use('/messages', messages);
 app.use('/schedule', schedule);
+app.use('/activity', activity);
 app.use('/attendee', attendee);
 
 

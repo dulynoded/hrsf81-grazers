@@ -11,11 +11,11 @@ module.exports = {
   schedules: [
     {
       date: '2017-10-09',
-      eventId: 1
+      event_id: 1
     },
     {
       date: '2017-10-10',
-      eventId: 1
+      event_id: 1
     }
   ],
 
@@ -25,98 +25,98 @@ module.exports = {
       endtime: '10:00:00',
       activity: 'Registration',
       location: 'Front Lobby',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '10:00:00',
       endtime: '11:00:00',
       activity: 'Keynote Speaker',
       location: 'Main Auditorium',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '12:00:00',
       endtime: '13:30:00',
       activity: 'Lunch',
       location: 'Grand Ballroom',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '14:00:00',
       endtime: '14:00:00',
       activity: 'Breakout Sessions I',
       location: 'Blue, Green and Yellow Rooms',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '16:00:00',
       endtime: '18:00:00',
       activity: 'Breakout Sessions II',
       location: 'Blue, Green and Yellow Rooms',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '18:30:00',
       endtime: '20:30:00',
       activity: 'Dinner',
       location: 'Grand Ballroom',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '21:30:00',
       endtime: '23:30:00',
       activity: 'Movies Under the Stars',
       location: 'Center Gardens',
-      scheduleId: 1
+      schedule_id: 1
     },
     {
       starttime: '09:00:00',
       endtime: '10:00:00',
       activity: 'Continental Breakfast',
       location: 'Grand Ballroom',
-      scheduleId: 2
+      schedule_id: 2
     },
     {
       starttime: '10:00:00',
       endtime: '11:30:00',
       activity: 'Panel: Famous People',
       location: 'Main Auditorium',
-      scheduleId: 2
+      schedule_id: 2
     },
     {
       starttime: '12:00:00',
       endtime: '13:00:00',
       activity: 'Lunch',
       location: 'Grand Ballroom',
-      scheduleId: 2
+      schedule_id: 2
     },
     {
       starttime: '14:00:00',
       endtime: '15:00:00',
       activity: 'Art Exhibition',
       location: 'Center Gardens',
-      scheduleId: 2
+      schedule_id: 2
     },
     {
       starttime: '15:00:00',
       endtime: '18:00:00',
       activity: 'Tea Time',
       location: 'Grand Ballroom',
-      scheduleId: 2
+      schedule_id: 2
     },
     {
       starttime: '18:00:00',
       endtime: '19:00:00',
       activity: 'Dinner',
       location: 'Grand Ballroom',
-      scheduleId: 2
+      schedule_id: 2
     },
     {
       starttime: '19:00:00',
       endtime: '21:30:00',
       activity: 'Awards Ceremony',
       location: 'Main Auditorium',
-      scheduleId: 2
+      schedule_id: 2
     }
   ],
 
