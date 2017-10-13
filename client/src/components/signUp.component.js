@@ -91,7 +91,6 @@ module.exports = {
         $scope.form.conference = '';
         $scope.form.role = 'organizer';
       }
-      console.log('sending', $scope.form);
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {
