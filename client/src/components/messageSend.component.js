@@ -1,4 +1,5 @@
-// const aws = require('../../../server/helpers/aws');
+const aws = require('../../../server/helpers/aws');
+
 module.exports = {
   bindings: {
     user: '<',
@@ -42,24 +43,13 @@ module.exports = {
     };
 
     $scope.DialogController = ($scope) => {
-      $scope.options = [
-        '141733.png',
-        '95061-200.png',
-        'Image uploaded from iOS.jpg',
-        'hungry/646-cat-hungry-sticker.png',
-        'hungry/download.jpeg',
-        'hungry/hungry-emoticon-288.png',
-        'hungry/images.jpeg',
-        'sleepy/56c57792ccbda30362e5860b86a30be0--sanrio-sleep.jpg'
-      ];
+      aws.promiz().then((data) => {
+        $scope.options = data.Contents.map(entry => entry.Key);
+      })
       $scope.chosenOption = ''; // default
-
-      $scope.$watch("chosenOption", function(newValue) {
-        if (angular.isDefined(newValue)) {
-          $scope.endpoint = newValue;
-          console.log('endpt', $scope.endpoint);
-        }
-    });
+      $scope.$watch("chosenOption", (newValue) => {
+        $scope.endpoint = newValue;
+      });
 
       $scope.msg = {
         user: this.user,
