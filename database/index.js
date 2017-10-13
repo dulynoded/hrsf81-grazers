@@ -23,8 +23,8 @@ const addSchedule = schedule =>
 
 const addActivity = activity =>
   pool.query(
-    'INSERT INTO activities(time, activity, location, schedule_id) values($1, $2, $3, $4)',
-    [activity.time, activity.activity, activity.location, activity.scheduleId]
+    'INSERT INTO activities(starttime, endtime, activity, location, schedule_id) values($1, $2, $3, $4, $5)',
+    [activity.starttime, activity.endtime, activity.activity, activity.location, activity.scheduleId]
   );
 
 const addGroupToActivity = (groupId, activityId) =>
@@ -109,7 +109,8 @@ const getUsersByGroup = groupId =>
     ON users.id = group_user.user_id
     INNER JOIN groups
     ON group_user.group_id = groups.id
-    WHERE group_user.group_id = ${groupId}`);
+    WHERE group_user.group_id = ${groupId}
+    ORDER by lastname`);
 
 const getGroupByUser = userId =>
   pool.query(`SELECT groups.*
@@ -123,7 +124,8 @@ const getGroupByUser = userId =>
 const getGroupsByEvent = eventId =>
   pool.query(`SELECT *
     FROM groups
-    WHERE groups.event_id = ${eventId}`);
+    WHERE groups.event_id = ${eventId}
+    ORDER by name`);
 
 const getEvent = eventId =>
   pool.query(`SELECT *
@@ -133,12 +135,14 @@ const getEvent = eventId =>
 const getSchedulesByEvent = eventId =>
   pool.query(`SELECT *
     FROM schedules
-    WHERE schedules.event_id = ${eventId}`); // TODO: sort by date
+    WHERE schedules.event_id = ${eventId}
+    ORDER by date`);
 
 const getActivitiesByDay = scheduleId =>
   pool.query(`SELECT *
     FROM activities
-    WHERE activities.schedule_id = ${scheduleId}`); // TODO: sort by time
+    WHERE activities.schedule_id = ${scheduleId}
+    ORDER by starttime`);
 
 const getActivitiesByDayByGroup = (scheduleId, groupId) =>
   pool.query(`(SELECT activities.*
@@ -151,7 +155,18 @@ const getActivitiesByDayByGroup = (scheduleId, groupId) =>
     ON activities.id = group_activity.activity_id
     INNER JOIN groups
     ON group_activity.group_id = groups.id
-    WHERE group_activity.group_id = ${groupId})`); // TODO: sort by time
+    WHERE group_activity.group_id = ${groupId})
+    ORDER by starttime`);
+
+const getGroupNamesByActivity = activityId =>
+  pool.query(`SELECT groups.*
+    FROM groups
+    INNER JOIN group_activity
+    ON groups.id = group_activity.group_id
+    INNER JOIN activities
+    ON group_activity.activity_id = activities.id
+    WHERE group_activity.activity_id = ${activityId}
+    ORDER by name`);
 
 const getAllAttendees = () =>
   pool.query("SELECT * FROM users where role = 'attendee'");
@@ -188,6 +203,7 @@ module.exports = {
   getSchedulesByEvent,
   getActivitiesByDay,
   getActivitiesByDayByGroup,
+  getGroupNamesByActivity,
   getAllAttendees,
   getAttendeesById,
 };

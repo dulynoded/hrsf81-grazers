@@ -1,7 +1,8 @@
 module.exports = {
   bindings: {
     eventId: '<',
-    group: '<'
+    group: '<',
+    user: '<'
   },
   controller($http) {
     this.displayedSchedule = 'event';
@@ -34,7 +35,6 @@ module.exports = {
       if (changesObj.group.currentValue) {
         this.getSchedule(this.eventId, this.group.id)
           .then((schedule) => {
-            console.log('client side group schedule', schedule);
             this.groupSchedule = schedule;
             this.displayedSchedule = schedule ? 'group' : 'event';
           })

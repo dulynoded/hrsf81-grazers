@@ -13,3 +13,4 @@ angular.module('eventHUD').component('messageDisplay', require('./messageDisplay
 angular.module('eventHUD').component('manageGroup', require('./manageGroup.component'));
 angular.module('eventHUD').component('eventInformation', require('./eventInformation.component'));
 angular.module('eventHUD').component('scheduleDisplay', require('./scheduleDisplay.component'));
+angular.module('eventHUD').component('activityCreate', require('./activityCreate.component'));

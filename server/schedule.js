@@ -14,7 +14,19 @@ router.get('/:eventId', (req, res) => {
       return Promise.all(schedulesData.rows.map((schedule) => {
         const { date } = schedule;
         return db.getActivitiesByDay(schedule.id)
-          .then(activitiesData => activitiesData.rows)
+          .then(activitiesData => {
+            return Promise.all(activitiesData.rows.map((actData) => {
+              const activity = actData;
+              return db.getGroupNamesByActivity(activity.id)
+                .then(groups => {
+                  // assign arbitrary date to time in order to parse in front end
+                  activity.starttime = new Date(`1970-01-01T${activity.starttime}`);
+                  activity.endtime = new Date(`1970-01-01T${activity.endtime}`);
+                  activity.groups = groups.rows;
+                  return activity;
+                });
+            }));
+          })
           .then((timetable) => {
             return { date, timetable };
           });
@@ -42,17 +54,5 @@ router.get('/:eventId/:groupId', (req, res) => {
       res.status(200).send(results);
     });
 });
-
-// router.get('/:scheduleId', (req, res) => {
-//   const scheduleId = Number(req.params.scheduleId);
-//   let schedule;
-//   for (let i = 0; i < stub.schedules.length; i += 1) {
-//     if (stub.schedules[i].id === scheduleId) {
-//       schedule = stub.schedules[i];
-//       break;
-//     }
-//   }
-//   res.status(200).send(schedule);
-// });
 
 module.exports = router;
