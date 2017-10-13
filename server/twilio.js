@@ -1,7 +1,13 @@
 const config = require('./config');
-const Twilio = require('twilio');
+try {
+  const Twilio = require('twilio');
+  const { accountSid, authToken } = config;
+}
+catch(err) {
+  const accountSid = process.env.ACCOUNT_SID;
+  const authToken = process.env.AUTH_TOKEN;
+}
 
-const { accountSid, authToken } = config;
 const client = new Twilio(accountSid, authToken);
 
 const accessCodeLength = 8;
