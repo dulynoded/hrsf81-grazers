@@ -4,7 +4,7 @@ function signIn($location) {
   this.getUser = () => {
     console.log('getting user');
     return this.user;
-  }
+  };
 
   this.submit = () => (
     (user, signupRedirect) => {
@@ -23,17 +23,22 @@ function signIn($location) {
     }
   );
 
-  this.createEventRedirect = () => {
-    
-  }
+  this.createEventRedirect = () => (
+    (user) => {
+      console.log('in event redirect', user);
+      this.user = user;
+      $location.path('/organizer');
+    }
+  );
 
   this.signUp = () =>
     (userData) => {
       this.user = userData;
+      console.log('in signup', userData);
       if (this.user.role !== 'organizer') {
         $location.path(`/${this.user.role}`);
       } else {
-        console.log('redirecting to create');
+        console.log('directing to create');
         $location.path('/create');
       }
     };

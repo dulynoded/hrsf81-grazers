@@ -66,7 +66,7 @@ module.exports = {
       const curConfId = curConf.id;
       this.roles = Object.keys(this.eventObj[curConfId].groupData);
       const organizerInd = this.roles.indexOf('organizer');
-      if (organizerInd > -1) { this.roles.splice(organizerInd, 1) }
+      if (organizerInd > -1) { this.roles.splice(organizerInd, 1) };
     };
 
     this.loadJobs = () => {
@@ -87,11 +87,11 @@ module.exports = {
     this.handleClick = () => {
       $scope.form.conference = JSON.parse($scope.form.conference).name;
       $scope.form.conferenceId = $scope.form.conference.id;
-      console.log('form is', $scope.form);
       if (this.isNewEvent) {
         $scope.form.conference = '';
         $scope.form.role = 'organizer';
       }
+      console.log('sending', $scope.form);
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {
@@ -100,7 +100,6 @@ module.exports = {
             $scope.form,
             { id: data.userId, group_id: data.groupId }
           );
-          console.log('userData to send', userData);
           this.signUp(userData);
         })
         .catch((err) => {

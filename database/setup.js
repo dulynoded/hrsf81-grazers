@@ -22,7 +22,6 @@ const eventsTable = `CREATE TABLE IF NOT EXISTS events (
   name VARCHAR(80),
   location VARCHAR(80),
   organizer_id SERIAL REFERENCES users(id),
-  schedule_id INTEGER,
   startdate VARCHAR(80),
   enddate VARCHAR(80)
 )`;
@@ -31,8 +30,7 @@ const groupsTable = `CREATE TABLE IF NOT EXISTS groups (
   id SERIAL UNIQUE NOT NULL PRIMARY KEY,
   name VARCHAR(80),
   type VARCHAR(80),
-  event_id SERIAL REFERENCES events(id),
-  schedule_id INTEGER)`;
+  event_id SERIAL REFERENCES events(id))`;
 
 const schedulesTable = `CREATE TABLE IF NOT EXISTS schedules (
   id SERIAL UNIQUE NOT NULL PRIMARY KEY,
