@@ -59,7 +59,7 @@ module.exports = {
         messageMedia: this.messageMedia
       };
 
-      groups.get()
+      groups.get(this.user.event_id)
         .then((groupData) => {
           $scope.groups = groupData;
         })
