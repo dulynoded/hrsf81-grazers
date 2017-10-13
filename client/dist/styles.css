@@ -142,7 +142,8 @@ md-list-item.md-3-line.md-long-text {
 }
 
 .event-details {
-    font-size: 1em;
+    font-size: 1.1em;
+    font-weight: bold;
 }
 
 .event-title {
