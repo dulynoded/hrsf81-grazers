@@ -42,6 +42,25 @@ module.exports = {
     };
 
     $scope.DialogController = ($scope) => {
+      $scope.options = [
+        '141733.png',
+        '95061-200.png',
+        'Image uploaded from iOS.jpg',
+        'hungry/646-cat-hungry-sticker.png',
+        'hungry/download.jpeg',
+        'hungry/hungry-emoticon-288.png',
+        'hungry/images.jpeg',
+        'sleepy/56c57792ccbda30362e5860b86a30be0--sanrio-sleep.jpg'
+      ];
+      $scope.chosenOption = ''; // default
+
+      $scope.$watch("chosenOption", function(newValue) {
+        if (angular.isDefined(newValue)) {
+          $scope.endpoint = newValue;
+          console.log('endpt', $scope.endpoint);
+        }
+    });
+
       $scope.msg = {
         user: this.user,
         messageTitle: this.messageTitle,
@@ -63,9 +82,7 @@ module.exports = {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;
         this.messageBody = $scope.msg.messageBody;
-        // this.messageMedia = $scope.msg.media;
-        // TODO: replace hard coded image with lection from list
-        this.messageMedia = `https://s3-us-west-1.amazonaws.com/hrsf81-grazers/141733.png`;
+        this.messageMedia = `https://s3-us-west-1.amazonaws.com/hrsf81-grazers/${$scope.endpoint}`;
         $mdDialog.hide();
       };
     };
