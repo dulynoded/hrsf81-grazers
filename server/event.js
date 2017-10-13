@@ -8,6 +8,47 @@ router.use((req, res, next) => {
   next();
 });
 
+router.route('/')
+  .get((req, res) => {
+    res.status(200).send();
+  })
+  .post((req, res) => {
+    console.log('posting event', req.body);
+    const eventObj = {
+      name: req.body.name,
+      location: req.body.location,
+      organizer_id: req.body.organizer_id,
+      startdate: req.body.start_date,
+      enddate: req.body.end_date,
+    };
+    let event_id;
+    db.addEvent(eventObj)
+      .then((data) => {
+        console.log('data is', data);
+        event_id = data.rows[0].id;
+        const promiseArr = [];
+        promiseArr.push(db.addGroup({ type: 'attendee', name: 'General Admissions', event_id }));
+        req.body.groups.forEach((group) => {
+          const groupObj = {
+            name: group,
+            type: 'staff',
+            event_id
+          };
+          promiseArr.push(db.addGroup(groupObj));
+        });
+        return Promise.all(promiseArr);
+      })
+      .then(() => {
+        return db.addEventToUser(eventObj.organizer_id, event_id);
+      })
+      .then(() => {
+        res.status(200).send({ event_id, name: eventObj.name });
+      })
+      .catch((err) => {
+        console.log('err in add event', err);
+      });
+  })
+
 router.route('/:eventId')
   .get((req, res) => {
     const eventId = Number(req.params.eventId);

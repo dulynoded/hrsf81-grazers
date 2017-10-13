@@ -11,9 +11,9 @@ router.use((req, res, next) => {
 
 router.post('/', (req, res, next) => {
   passport.authenticate('local-signup', (err, user, info) => {
-    console.log('err', err);
-    console.log('user', user);
-    console.log('info', info);
+    // console.log('err', err);
+    // console.log('user', user);
+    // console.log('info', info);
     if (err) {
       return next(err);
     }
@@ -26,9 +26,9 @@ router.post('/', (req, res, next) => {
 
 router.get('/login', (req, res, next) => {
   passport.authenticate('local-login', (err, user, info) => {
-    console.log('err', err);
-    console.log('user', user);
-    console.log('info', info);
+    // console.log('err', err);
+    // console.log('user', user);
+    // console.log('info', info);
     if (err) {
       return next(err);
     }

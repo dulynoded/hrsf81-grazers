@@ -39,13 +39,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
-// app.post('/signup', passport.authenticate('local-signup', {
-//   successRedirect: '/profile', // redirect to the secure profile section
-//   failureRedirect: '/signup', // redirect back to the signup page if there is an error
-//   failureFlash: true // allow flash messages
-// }));
-
-
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(express.static(path.join(__dirname, '/../node_modules')));
 app.use(express.static(path.join(__dirname, '/../client/src/templates')));
@@ -80,12 +73,29 @@ wss.on('connection', (ws) => {
     }
   });
 
-  //setInterval(wsKeepAlive, 5000);
+  // setInterval(wsKeepAlive, 5000);
 });
 
 app.route('/events')
   .get((req, res) => {
-    res.status(200).send(stub.events);
+    console.log('req.query is', req.query);
+    if (req.query.id) {
+      db.getEvent(req.query.id)
+        .then((data) => {
+          res.status(200).send(data.rows);
+        })
+        .catch((err) => {
+          console.log('err in events get', err);
+        });
+    } else {
+      db.getAllEvents()
+        .then((data) => {
+          res.status(200).send(data.rows);
+        })
+        .catch((err) => {
+          console.log('err in events get', err);
+        });
+    }
   })
   .post((req, res) => {
     const newEventObj = req.body;
@@ -93,7 +103,14 @@ app.route('/events')
   });
 
 app.get('/groups', (req, res) => {
-  res.status(200).send(stub.groups);
+  db.getAllGroups()
+    .then((data) => {
+      res.status(200).send(data.rows);
+    })
+    .catch((err) => {
+      console.log('err in groups get', err);
+    });
+  // res.status(200).send(stub.groups);
 });
 
 app.get('/users', (req, res) => {

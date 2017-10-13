@@ -20,6 +20,13 @@ angular.module('eventHUD', ['ngRoute', 'ngMaterial'])
           signUp: signin => signin.signUp()
         }
       })
+      .when('/create', {
+        template: '<create-event user="$resolve.user" redirect="$resolve.redirect"></create-event>',
+        resolve: {
+          user: signin => signin.getUser(),
+          redirect: signin => signin.createEventRedirect()
+        }
+      })
       .when('/organizer', {
         template: '<manage-event user="$resolve.user"></manage-event>',
         resolve: {

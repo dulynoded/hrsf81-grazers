@@ -1,9 +1,8 @@
 function groups($http) {
-  this.get = () => {
-    const tempEventId = 1;
+  this.get = (eventId = 1) => {
     return $http({
       method: 'GET',
-      url: `/event/${tempEventId}/groups`
+      url: `/event/${eventId}/groups`
     })
       .then(response => response.data)
       .catch(console.error);

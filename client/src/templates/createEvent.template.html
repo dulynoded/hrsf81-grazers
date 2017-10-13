@@ -1,0 +1,40 @@
+<div flex layout="row" layout-align="center center" class="signin container">
+    <div layout="column" layout-align="center center" md-whiteframe="5" class="signin-form">
+        <form flex layout="row" layout-align="end center" layout-wrap>
+            <h1 flex="100" class="md-display-2">Create Event</h1>
+            <md-input-container flex="50">
+                <label for="name">Event name</label>
+                <input id="name" autocomplete="off" type="name" ng-model="form.name"/>
+            </md-input-container>
+            <md-input-container flex="50">
+                <label for="location">Event location</label>
+                <input id="location" autocomplete="off" type="location" ng-model="form.location"/>
+            </md-input-container>
+            <md-datepicker ng-model="ctrl.startDate" md-placeholder="Start date"></md-datepicker>
+            <md-datepicker ng-model="ctrl.endDate" md-placeholder="End date"></md-datepicker>
+            <md-input-container flex="50">
+                <label for="group">Add Group (i.e. volunteer, greeter)</label>
+                <input id="group" autocomplete="off" type="group" ng-model="form.group"/>
+            </md-input-container>
+            <md-button class="md-accent md-raised" aria-label="Add Group" ng-click="$ctrl.addGroup()">Add Group</md-button>
+            <md-button class="md-accent md-raised" aria-label="Create Event" ng-click="$ctrl.handleEventClick()">Create Event</md-button>
+        </form>
+    </div>
+    <div layout="column" layout-align="center center" md-whiteframe="5" class="signin-form">
+        <md-toolbar layout="row" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <span>Current Groups</span>
+            </div>
+        </md-toolbar>
+        <md-content flex="100">
+            <md-list class="md-dense" flex="100">
+                <md-subheader class="md-no-sticky" flex="100">Groups</md-subheader>
+                <md-list-item class="md-3-line"  flex="100" ng-repeat="group in $ctrl.groups track by $index" value={{group}}>
+                    <div class="md-list-item-text" layout="column">
+                    <p>{{group}}</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+</div>

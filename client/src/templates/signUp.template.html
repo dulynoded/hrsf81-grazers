@@ -18,22 +18,41 @@
         <label for="password">&nbsp;&nbsp;Password</label>
         <input id="password" autocomplete="off" type="password" ng-model="form.password"/>
       </md-input-container>
-      <md-input-container flex="30">
-        <md-select id="conferenceSelect" required ng-model="form.conference" placeholder="Conference">
-          <md-option ng-repeat="conference in $ctrl.conferences track by conference.id" value={{conference}}>{{conference.name}}</md-option>
-        </md-select>
-      </md-input-container>
-      <md-input-container flex="30">
-        <md-select id="roleSelect" required ng-model="form.role" placeholder="Role">
-          <md-option ng-repeat="role in $ctrl.roles track by role.id" value={{role}}>
-              {{role.name.charAt(0).toUpperCase() + role.name.slice(1)}}
+      <md-input-container flex="33">
+        <md-select
+            id="conferenceSelect"
+            required ng-model="form.conference"
+            placeholder="Conference"
+            ng-change="$ctrl.selectChange()"
+        >
+          <md-option ng-repeat="conference in $ctrl.events track by $index" value={{conference}}>
+              {{conference.name}}
           </md-option>
         </md-select>
       </md-input-container>
-      <md-input-container flex="30">
-        <md-select id="jobSelect" required ng-model="form.job" placeholder="Job">
-          <md-option ng-repeat="job in $ctrl.jobs track by job.id" value={{job}}>
-              {{job.name.charAt(0).toUpperCase() + job.name.slice(1)}}
+      <md-input-container flex="33">
+        <md-select id="roleSelect"
+            required
+            ng-disabled="$ctrl.isNewEvent"
+            ng-model="form.role" md-on-open="$ctrl.loadRoles()"
+            placeholder="Role"
+        >
+          <md-option ng-repeat="role in $ctrl.roles track by $index" value={{role}}>
+              {{role.charAt(0).toUpperCase() + role.slice(1)}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container flex="33">
+        <md-select
+            id="jobSelect"
+            required
+            ng-model="form.job"
+            md-on-open="$ctrl.loadJobs()"
+            placeholder="Job"
+            ng-disabled="$ctrl.isNewEvent"
+        >
+          <md-option ng-repeat="job in $ctrl.jobs track by $index" value={{job}}>
+              {{job.charAt(0).toUpperCase() + job.slice(1)}}
           </md-option>
         </md-select>
       </md-input-container>

@@ -1,7 +1,10 @@
-function signIn($location, $http) {
+function signIn($location) {
   this.user = null;
 
-  this.getUser = () => this.user;
+  this.getUser = () => {
+    console.log('getting user');
+    return this.user;
+  };
 
   this.submit = () => (
     (user, signupRedirect) => {
@@ -20,11 +23,24 @@ function signIn($location, $http) {
     }
   );
 
+  this.createEventRedirect = () => (
+    (user) => {
+      console.log('in event redirect', user);
+      this.user = user;
+      $location.path('/organizer');
+    }
+  );
+
   this.signUp = () =>
     (userData) => {
-      console.log('in signup service!', userData);
       this.user = userData;
-      $location.path(`/${this.user.role}`);
+      console.log('in signup', userData);
+      if (this.user.role !== 'organizer') {
+        $location.path(`/${this.user.role}`);
+      } else {
+        console.log('directing to create');
+        $location.path('/create');
+      }
     };
 }
 

@@ -5,14 +5,14 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, firstname, lastname, email, phone_number, password) values($1, $2, $3, $4, $5, $6) RETURNING id',
-    [user.role, user.firstname, user.lastname, user.email, user.phone, user.password]
+    'INSERT INTO users(role, firstname, lastname, email, phone_number, password, event_id) values($1, $2, $3, $4, $5, $6, $7) RETURNING id',
+    [user.role, user.firstname, user.lastname, user.email, user.phone, user.password, user.event_id]
   );
 
 const addEvent = event =>
   pool.query(
-    'INSERT INTO events(name, location, organizer_id, schedule_id) values($1, $2, $3, $4)',
-    [event.name, event.location, event.organizerId, event.scheduleId]
+    'INSERT INTO events(name, location, organizer_id, startdate, enddate) values($1, $2, $3, $4, $5) RETURNING id',
+    [event.name, event.location, event.organizer_id, event.startdate, event.enddate]
   );
 
 const addSchedule = schedule =>
@@ -35,8 +35,8 @@ const addGroupToActivity = (groupId, activityId) =>
 
 const addGroup = group =>
   pool.query(
-    'INSERT INTO groups(name, type, event_id, schedule_id) values($1, $2, $3, $4)',
-    [group.name, group.type, group.eventId, group.scheduleId]
+    'INSERT INTO groups(name, type, event_id) values($1, $2, $3)',
+    [group.name, group.type, group.event_id]
   );
 
 const findGroup = group =>
@@ -174,6 +174,9 @@ const getAllAttendees = () =>
 const getAttendeesById = userId =>
   pool.query(`SELECT * FROM users where role = 'attendee' and id = ${userId}`);
 
+const addEventToUser = (userId, eventId) =>
+  pool.query(`UPDATE users SET event_id='${eventId}' WHERE id='${userId}'`);
+
 module.exports = {
   addUser,
   addEvent,
@@ -206,4 +209,5 @@ module.exports = {
   getGroupNamesByActivity,
   getAllAttendees,
   getAttendeesById,
+  addEventToUser,
 };

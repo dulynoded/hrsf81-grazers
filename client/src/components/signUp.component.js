@@ -3,32 +3,95 @@ module.exports = {
     signUp: '<',
   },
   controller($http, $scope) {
-    this.user = 'Test';
-    this.conferences = [{ name: 'test conference', id: 1 }, { name: 'test2 conference', id: 2 }];
-    this.roles = [{ name: 'organizer', id: 1 }, { name: 'staff', id: 2 }];
-    this.jobs = [{ name: 'volunteers', id: 1 }, { name: 'greeters', id: 2 }];
+    this.roles = [];
+    this.jobs = [];
+    this.events = [];
+    this.eventObj = {};
+    this.isNewEvent = false;
 
-    this.loadConferences = () => {
-      console.log('loading conferences');
-    };
+    this.loadConferences = (() => {
+      const eventObj = {};
+      $http.get('/events')
+        .then(response => response.data)
+        .then((data) => {
+          this.events = data;
+          this.events.push({ name: 'I want to organize an event', id: 'NEW' });
+          data.forEach((event) => {
+            eventObj[event.id] = { name: event.name, groupData: {} };
+          });
+          return this.loadGroupAndType();
+        })
+        .then((groupData) => {
+          groupData.forEach((group) => {
+            const curObj = eventObj[group.event_id].groupData;
+            if (curObj[group.type]) {
+              curObj[group.type].push(group.name);
+            } else {
+              curObj[group.type] = [group.name];
+            }
+          });
+          this.eventObj = eventObj;
+        })
+        .catch((err) => {
+          console.log('conference err is', err);
+        });
+    })();
 
-    this.loadRoles = () => {
-      console.log('loading roles');
-    };
-
+    this.loadGroupAndType = () => (
+      new Promise((resolve, reject) => {
+        $http.get('/groups')
+          .then(response => response.data)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((err) => {
+            console.log('conference err is', err);
+            reject(err);
+          });
+      })
+    );
     $scope.form = {
       firstname: '',
       lastname: '',
       password: '',
       conference: '',
+      conferenceId: '',
       role: '',
+      job: '',
       email: '',
     };
+
+    this.loadRoles = () => {
+      const curConf = JSON.parse($scope.form.conference);
+      const curConfId = curConf.id;
+      this.roles = Object.keys(this.eventObj[curConfId].groupData);
+      const organizerInd = this.roles.indexOf('organizer');
+      if (organizerInd > -1) { this.roles.splice(organizerInd, 1) };
+    };
+
+    this.loadJobs = () => {
+      const curConf = JSON.parse($scope.form.conference);
+      const curConfId = curConf.id;
+      this.jobs = this.eventObj[curConfId].groupData[$scope.form.role];
+    };
+
+    this.selectChange = () => {
+      const curConf = JSON.parse($scope.form.conference);
+      if (curConf.id === 'NEW') {
+        this.isNewEvent = true;
+      } else {
+        this.isNewEvent = false;
+      }
+    };
+
     this.handleClick = () => {
       $scope.form.conference = JSON.parse($scope.form.conference).name;
-      // FIXME: Need to include staff/organizer role and job
-      $scope.form.role = JSON.parse($scope.form.role).name;
-      $scope.form.job = JSON.parse($scope.form.job).name;
+      $scope.form.conferenceId = $scope.form.conference.id;
+      if (this.isNewEvent) {
+        $scope.form.conference = '';
+        $scope.form.role = 'organizer';
+      }
+      console.log('sending', $scope.form);
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {
@@ -39,24 +102,11 @@ module.exports = {
           );
           this.signUp(userData);
         })
-        .catch(err => {
+        .catch((err) => {
           // TODO: This email is already taken, try again.
           console.log('err is', err);
         });
-
     };
-
-    // this.loadUsers = () =>
-    // $http({
-    //   method: 'GET',
-    //   url: '/users'
-    // })
-    // .then(response => response.data)
-    // .then((users) => {
-    //   this.users = users;
-    // })
-    // .catch(console.error);
-
   },
   templateUrl: 'signUp.template.html'
 };

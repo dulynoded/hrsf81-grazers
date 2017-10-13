@@ -4,8 +4,23 @@ module.exports = {
     group: '<',
     changeView: '<'
   },
-  controller(groups) {
-    this.event = 'Grazers Con';
+  controller(groups, $http) {
+    this.$onInit = () => {
+      $http.get('/events', { params: { id: this.user.event_id } })
+        .then((results) => {
+          this.event = results.data[0].name;
+        })
+        .catch((err) => {
+          throw err;
+        });
+
+      groups.get(this.user.event_id)
+        .then((groupsData) => {
+          this.groups = groupsData;
+        })
+        .catch(console.error);
+    };
+    this.event = '';
 
     this.$onChanges = (changesObj) => {
       if (changesObj.group.currentValue) {
@@ -16,12 +31,6 @@ module.exports = {
           .catch(console.error);
       }
     };
-
-    groups.get()
-      .then((groupsData) => {
-        this.groups = groupsData;
-      })
-      .catch(console.error);
   },
   templateUrl: 'controlPanel.template.html'
 };
