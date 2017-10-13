@@ -55,6 +55,7 @@ module.exports = {
       lastname: '',
       password: '',
       conference: '',
+      conferenceInput: '',
       conferenceId: '',
       role: '',
       job: '',
@@ -62,7 +63,7 @@ module.exports = {
     };
 
     this.loadRoles = () => {
-      const curConf = JSON.parse($scope.form.conference);
+      const curConf = JSON.parse($scope.form.conferenceInput);
       const curConfId = curConf.id;
       this.roles = Object.keys(this.eventObj[curConfId].groupData);
       const organizerInd = this.roles.indexOf('organizer');
@@ -70,13 +71,13 @@ module.exports = {
     };
 
     this.loadJobs = () => {
-      const curConf = JSON.parse($scope.form.conference);
+      const curConf = JSON.parse($scope.form.conferenceInput);
       const curConfId = curConf.id;
       this.jobs = this.eventObj[curConfId].groupData[$scope.form.role];
     };
 
     this.selectChange = () => {
-      const curConf = JSON.parse($scope.form.conference);
+      const curConf = JSON.parse($scope.form.conferenceInput);
       if (curConf.id === 'NEW') {
         this.isNewEvent = true;
       } else {
@@ -85,8 +86,9 @@ module.exports = {
     };
 
     this.handleClick = () => {
-      $scope.form.conference = JSON.parse($scope.form.conference).name;
-      $scope.form.conferenceId = $scope.form.conference.id;
+      $scope.form.conferenceId = JSON.parse($scope.form.conferenceInput).id;
+      // $scope.form.conferenceName = JSON.parse($scope.form.conference).name;
+      $scope.form.conference = JSON.parse($scope.form.conferenceInput).name;
       if (this.isNewEvent) {
         $scope.form.conference = '';
         $scope.form.role = 'organizer';
