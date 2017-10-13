@@ -13,12 +13,7 @@
             <md-datepicker ng-model="ctrl.startDate" md-placeholder="Start date"></md-datepicker>
             <md-datepicker ng-model="ctrl.endDate" md-placeholder="End date"></md-datepicker>
             <md-input-container flex="50">
-                <label for="role">Add role (i.e. staff, attendee)</label>
-                <input id="role" autocomplete="off" type="role" ng-model="form.role"/>
-            </md-input-container>
-            <md-button class="md-accent md-raised" aria-label="Add Role" ng-click="$ctrl.addRole()">Add Role</md-button>
-            <md-input-container flex="50">
-                <label for="group">Add Group (i.e. volunteer, general admit)</label>
+                <label for="group">Add Group (i.e. volunteer, greeter)</label>
                 <input id="group" autocomplete="off" type="group" ng-model="form.group"/>
             </md-input-container>
             <md-button class="md-accent md-raised" aria-label="Add Group" ng-click="$ctrl.addGroup()">Add Group</md-button>
@@ -28,20 +23,13 @@
     <div layout="column" layout-align="center center" md-whiteframe="5" class="signin-form">
         <md-toolbar layout="row" class="md-hue-3">
             <div class="md-toolbar-tools">
-                <span>Current Jobs and Roles</span>
+                <span>Current Groups</span>
             </div>
         </md-toolbar>
-        <md-content>
-            <md-list class="md-dense" flex>
-                <md-subheader class="md-no-sticky">Roles </md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="role in $ctrl.roles track by $index" value={{role}}>
-                    <div class="md-list-item-text" layout="column">
-                        <h3>{{role}}</h3>
-                    </div>
-                </md-list-item>
-                <md-divider ></md-divider>
-                <md-subheader class="md-no-sticky">Groups</md-subheader>
-                <md-list-item class="md-3-line"  ng-repeat="group in $ctrl.groups track by $index" value={{group}}>
+        <md-content flex="100">
+            <md-list class="md-dense" flex="100">
+                <md-subheader class="md-no-sticky" flex="100">Groups</md-subheader>
+                <md-list-item class="md-3-line"  flex="100" ng-repeat="group in $ctrl.groups track by $index" value={{group}}>
                     <div class="md-list-item-text" layout="column">
                     <p>{{group}}</p>
                     </div>
