@@ -3,11 +3,8 @@ module.exports = {
     user: '<',
     redirect: '<',
   },
-  controller($http, $scope) {
-    this.$onInit = () => {
-      console.log('user is', this.user);
-    };
 
+  controller($http, $scope) {
     this.startDate = new Date();
     this.endDate = new Date();
     this.groups = [];
@@ -18,14 +15,16 @@ module.exports = {
       location: '',
     };
 
-    // Add groups to staff role
     this.addGroup = () => {
       this.groups.push($scope.form.group);
       $scope.form.group = '';
     };
 
+    this.loadEndDate = () => {
+      this.endDate = this.startDate;
+    };
+
     this.handleEventClick = () => {
-      // Submit event
       const obj = {
         start_date: this.startDate.toString(),
         end_date: this.endDate.toString(),
@@ -34,7 +33,6 @@ module.exports = {
         organizer_id: this.user.id,
         name: $scope.form.name,
       };
-      console.log('info to send is', obj);
 
       $http.post('/event', obj)
         .then(response => response.data)
@@ -47,7 +45,7 @@ module.exports = {
           this.redirect(this.user);
         })
         .catch((err) => {
-          console.log('err in event is', err);
+          throw err;
         });
     };
   },

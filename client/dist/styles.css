@@ -20,6 +20,41 @@ md-content {
   height: 400px;
   width: 500px;
   padding: 50px;
+  display: flex;
+}
+
+.signup-component {
+    padding: 0px;
+    margin: 0px;
+    padding-left: 5px;
+}
+
+.create-component {
+    padding: 0px;
+    padding-left: 5px;
+    margin: 0px;
+    margin-top: 20px;
+}
+
+.create-title {
+    margin-bottom: 0px;
+}
+
+#group-button {
+    font-size: 75%;
+}
+
+#group-list {
+    width: 30%;
+}
+
+#create-toolbar {
+    top: 0px;
+}
+
+#create-list {
+    height: 100%;
+    width: 100%;
 }
 
 /* Control Panel Component Styles */
