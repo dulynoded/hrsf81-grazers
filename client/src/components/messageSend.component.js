@@ -1,3 +1,4 @@
+// const aws = require('../../../server/helpers/aws');
 module.exports = {
   bindings: {
     user: '<',
@@ -58,12 +59,13 @@ module.exports = {
       $scope.hide = () => {
         $mdDialog.hide();
       };
-
       $scope.sendAndClose = () => {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;
         this.messageBody = $scope.msg.messageBody;
-        this.messageMedia = $scope.msg.media;
+        // this.messageMedia = $scope.msg.media;
+        // TODO: replace hard coded image with lection from list
+        this.messageMedia = `https://s3-us-west-1.amazonaws.com/hrsf81-grazers/141733.png`;
         $mdDialog.hide();
       };
     };
@@ -81,7 +83,6 @@ module.exports = {
         toIds: toGroupIds,
         title: this.messageTitle,
         text: this.messageBody,
-        // add media property here
         media: this.messageMedia,
         fromName: `${this.user.firstname} ${this.user.lastname}`,
         fromId: this.user.id,

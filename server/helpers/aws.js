@@ -7,15 +7,19 @@ AWS.config.update({
 });
 
 const s3bucket = new AWS.S3({params: {Bucket: 'hrsf81-grazers'}, apiVersion: '2006-03-01' });
-let keyname = '141733.png';
-let promise = s3bucket.getObject({ Key: keyname }).promise();
+// let keyname = '141733.png';
+s3bucket.listObjects().promise()
+  .then((data) => {
+    const keys = data.Contents.map(entry => entry.Key);
+    console.log(keys);
+  });
 
-const getSticker = () => {
-  return promise.then((data) => {
-    console.log(data);
-    return data;
-  })
-  .catch(err => console.error(err));
+const getSticker = (key) => {
+  s3bucket.getObject({ Key: key }).promise()
+    .then((data) => {
+      console.log(data.Body);
+    })
+    .catch(err => console.error(err));
 };
 
 module.exports.getSticker = getSticker;
