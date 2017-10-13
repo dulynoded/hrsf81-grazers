@@ -1,6 +1,5 @@
 module.exports = {
   bindings: {
-    eventId: '<',
     group: '<',
     user: '<'
   },
@@ -19,11 +18,11 @@ module.exports = {
     this.$onInit = function init() {
       $http({
         method: 'GET',
-        url: `/event/${this.eventId}`
+        url: `/event/${this.user.event_id}`
       })
         .then((response) => {
           this.event = response.data;
-          return this.getSchedule(this.eventId);
+          return this.getSchedule(this.user.event_id);
         })
         .then((schedule) => {
           this.eventSchedule = schedule;
@@ -33,7 +32,7 @@ module.exports = {
 
     this.$onChanges = (changesObj) => {
       if (changesObj.group.currentValue) {
-        this.getSchedule(this.eventId, this.group.id)
+        this.getSchedule(this.user.event_id, this.group.id)
           .then((schedule) => {
             this.groupSchedule = schedule;
             this.displayedSchedule = schedule ? 'group' : 'event';
