@@ -17,14 +17,14 @@ const addEvent = event =>
 
 const addSchedule = schedule =>
   pool.query(
-    'INSERT INTO schedules(date, event_id) values($1, $2)',
-    [schedule.date, schedule.eventId]
+    'INSERT INTO schedules(date, event_id) values($1, $2) RETURNING id',
+    [schedule.date, schedule.event_id]
   );
 
 const addActivity = activity =>
   pool.query(
-    'INSERT INTO activities(starttime, endtime, activity, location, schedule_id) values($1, $2, $3, $4, $5)',
-    [activity.starttime, activity.endtime, activity.activity, activity.location, activity.scheduleId]
+    'INSERT INTO activities(starttime, endtime, activity, location, schedule_id) values($1, $2, $3, $4, $5) RETURNING id',
+    [activity.starttime, activity.endtime, activity.activity, activity.location, activity.schedule_id]
   );
 
 const addGroupToActivity = (groupId, activityId) =>
