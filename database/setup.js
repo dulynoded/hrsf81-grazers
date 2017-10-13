@@ -22,7 +22,9 @@ const eventsTable = `CREATE TABLE IF NOT EXISTS events (
   name VARCHAR(80),
   location VARCHAR(80),
   organizer_id SERIAL REFERENCES users(id),
-  schedule_id INTEGER
+  schedule_id INTEGER,
+  startdate VARCHAR(80),
+  enddate VARCHAR(80)
 )`;
 
 const groupsTable = `CREATE TABLE IF NOT EXISTS groups (

@@ -3,6 +3,7 @@ const angular = require('angular');
 angular.module('eventHUD').component('app', require('./app.component'));
 angular.module('eventHUD').component('signIn', require('./signIn.component'));
 angular.module('eventHUD').component('signUp', require('./signUp.component'));
+angular.module('eventHUD').component('createEvent', require('./createEvent.component'));
 angular.module('eventHUD').component('controlPanel', require('./controlPanel.component'));
 angular.module('eventHUD').component('controlPanelItem', require('./controlPanelItem.component'));
 angular.module('eventHUD').component('manageEvent', require('./manageEvent.component'));

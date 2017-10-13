@@ -1,7 +1,10 @@
 function signIn($location) {
   this.user = null;
 
-  this.getUser = () => this.user;
+  this.getUser = () => {
+    console.log('getting user');
+    return this.user;
+  }
 
   this.submit = () => (
     (user, signupRedirect) => {
@@ -20,13 +23,18 @@ function signIn($location) {
     }
   );
 
+  this.createEventRedirect = () => {
+    
+  }
+
   this.signUp = () =>
     (userData) => {
       this.user = userData;
       if (this.user.role !== 'organizer') {
         $location.path(`/${this.user.role}`);
       } else {
-        console.log('new organizer path');
+        console.log('redirecting to create');
+        $location.path('/create');
       }
     };
 }
