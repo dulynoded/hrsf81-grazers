@@ -16,9 +16,7 @@
     <schedule-display ng-if="$ctrl.groupSchedule && $ctrl.displayedSchedule === 'group'" schedule="$ctrl.groupSchedule"></schedule-display>
     <schedule-display ng-if="$ctrl.displayedSchedule === 'event'" schedule="$ctrl.eventSchedule" user="$ctrl.user"></schedule-display>
   </md-content>
-  <div>
-    <div flex="nogrow" layout="column" layout-align="center center">
-      <md-button class="md-accent md-raised" ng-if="$ctrl.user.role === 'organizer'" ng-click="$ctrl.FILL_ME_IN()">Create A New Activity</md-button>
-    </div>
+  <div ng-if="$ctrl.user.role === 'organizer'">
+    <activity-create event-id="$ctrl.eventId"></activity-create>
   </div>
 </div>

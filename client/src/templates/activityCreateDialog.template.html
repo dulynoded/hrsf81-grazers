@@ -1,0 +1,23 @@
+<md-dialog flex="50" aria-label="Send Message">
+  <form id="messageSend" flex layout="column" layout-padding>
+    <md-dialog-content>
+      <div class="md-dialog-content" flex layout="column">
+        <md-select id="group-select" required multiple ng-model="msg.messageTo"
+          placeholder="Which groups should this announcement go to?">
+          <md-option ng-repeat="group in groups track by group.id" value="{{[group.id, group.name]}}">{{group.name}}</md-option>
+        </md-select>
+        <md-input-container>
+          <label for="compose-message-title">Do you want an announcement heading?</label>
+          <input id="compose-message-title" autocomplete="off" ng-model="msg.messageTitle"></input>
+        </md-input-container>
+        <md-input-container>
+          <label for="compose-message-body">What is your announcement?</label>
+          <textarea id="compose-message-body" required rows="3" ng-model="msg.messageBody"></textarea>
+        </md-input-container>
+    </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-accent md-raised" flex="nogrow"s ng-click="sendAndClose(msg)">Send Announcement</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
