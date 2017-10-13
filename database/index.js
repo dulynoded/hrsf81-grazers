@@ -5,7 +5,7 @@ const pool = new Pool(config);
 
 const addUser = user =>
   pool.query(
-    'INSERT INTO users(role, firstname, lastname, email, phone_number, password, event_id) values($1, $2, $3, $4, $5, $6, $7) RETURNING id',
+    'INSERT INTO users(role, firstname, lastname, email, phone, password, event_id) values($1, $2, $3, $4, $5, $6, $7) RETURNING id',
     [user.role, user.firstname, user.lastname, user.email, user.phone, user.password, user.event_id]
   );
 
