@@ -1,4 +1,5 @@
-// const aws = require('../../../server/helpers/aws');
+const aws = require('../../../server/helpers/aws');
+
 module.exports = {
   bindings: {
     user: '<',
@@ -42,6 +43,14 @@ module.exports = {
     };
 
     $scope.DialogController = ($scope) => {
+      aws.promiz().then((data) => {
+        $scope.options = data.Contents.map(entry => entry.Key);
+      })
+      $scope.chosenOption = ''; // default
+      $scope.$watch("chosenOption", (newValue) => {
+        $scope.endpoint = newValue;
+      });
+
       $scope.msg = {
         user: this.user,
         messageTitle: this.messageTitle,
@@ -63,9 +72,7 @@ module.exports = {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;
         this.messageBody = $scope.msg.messageBody;
-        // this.messageMedia = $scope.msg.media;
-        // TODO: replace hard coded image with lection from list
-        this.messageMedia = `https://s3-us-west-1.amazonaws.com/hrsf81-grazers/141733.png`;
+        this.messageMedia = `https://s3-us-west-1.amazonaws.com/hrsf81-grazers/${$scope.endpoint}`;
         $mdDialog.hide();
       };
     };
