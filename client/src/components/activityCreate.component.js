@@ -38,7 +38,7 @@ module.exports = {
         activityGroups: this.activityGroups
       };
 
-      groups.get()
+      groups.get(this.eventId)
         .then(groupData => $scope.groups = groupData)
         .catch(console.error);
 
