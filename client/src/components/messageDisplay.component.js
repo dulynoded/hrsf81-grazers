@@ -8,7 +8,7 @@ module.exports = {
     this.$onChanges = (changesObj) => {
       if (changesObj.group.currentValue || changesObj.user.currentValue) {
         this.fetchUrl = this.user.role === 'organizer' ?
-          '/messages/display/from/1' :
+          `/messages/display/from/${this.user.id}` :
           `/messages/display/to/${this.group.id}`;
       }
       if (this.fetchUrl) {

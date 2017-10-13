@@ -59,7 +59,7 @@ module.exports = {
         messageMedia: this.messageMedia
       };
 
-      groups.get()
+      groups.get(this.user.event_id)
         .then((groupData) => {
           $scope.groups = groupData;
         })
@@ -93,7 +93,7 @@ module.exports = {
         media: this.messageMedia,
         fromName: `${this.user.firstname} ${this.user.lastname}`,
         fromId: this.user.id,
-        eventId: 1
+        eventId: this.user.event_id,
       }));
       this.clearInputs();
     };

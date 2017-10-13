@@ -22,6 +22,9 @@ module.exports = {
       })
         .then((response) => {
           this.event = response.data;
+          console.log('event data is', this.event);
+          this.event.startdateReadable = new Date(this.event.startdate).toDateString()
+          this.event.enddateReadable = new Date(this.event.enddate).toDateString()
           return this.getSchedule(this.user.event_id);
         })
         .then((schedule) => {

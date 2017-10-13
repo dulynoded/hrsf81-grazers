@@ -7,7 +7,6 @@ module.exports = {
     this.$onInit = () => {
       console.log('user is', this.user);
     };
-    console.log('IN CONTROLLER FOR CREATE');
 
     this.startDate = new Date();
     this.endDate = new Date();
@@ -16,6 +15,7 @@ module.exports = {
     $scope.form = {
       name: '',
       group: '',
+      location: '',
     };
 
     // Add groups to staff role
@@ -29,17 +29,21 @@ module.exports = {
       const obj = {
         start_date: this.startDate.toString(),
         end_date: this.endDate.toString(),
+        location: $scope.form.location,
         groups: this.groups,
         organizer_id: this.user.id,
         name: $scope.form.name,
       };
-      console.log('info is', obj);
+      console.log('info to send is', obj);
 
       $http.post('/event', obj)
         .then(response => response.data)
         .then((data) => {
+          // TODO: conference and conferenceId can probably be deleted
           this.user.conference = data.name;
           this.user.conferenceId = data.event_id;
+          this.user.event = data.name;
+          this.user.event_id = data.event_id;
           this.redirect(this.user);
         })
         .catch((err) => {
