@@ -4,8 +4,7 @@ module.exports = {
     {
       name: 'Grazers Con',
       location: '944 Market Street, 8th floor, San Francisco, CA 94102',
-      organizerId: 1,
-      scheduleId: 1
+      organizer_id: 1,
     }
   ],
 
@@ -125,22 +124,22 @@ module.exports = {
     {
       name: 'Greeters',
       type: 'staff',
-      eventId: 1,
+      event_id: 1,
     },
     {
       name: 'Volunteers',
       type: 'staff',
-      eventId: 1,
+      event_id: 1,
     },
     {
       name: 'Tech Support',
       type: 'staff',
-      eventId: 1,
+      event_id: 1,
     },
     {
       name: 'General Admissions',
       type: 'attendee',
-      eventId: 1,
+      event_id: 1,
     }
   ],
 
