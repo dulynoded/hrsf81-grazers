@@ -6,7 +6,6 @@ module.exports = {
   controller($http, websockets) {
     this.displayedSchedule = 'event';
     this.event = {};
-    console.log('in event info');
 
     this.getSchedule = (eventId, groupId) => {
       const options = groupId
