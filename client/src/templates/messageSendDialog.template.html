@@ -14,18 +14,19 @@
           <label for="compose-message-body">What is your announcement?</label>
           <textarea id="compose-message-body" required rows="3" ng-model="msg.messageBody"></textarea>
         </md-input-container>
+
+        <md-button class="md-fab md-mini" flex="nogrow" ng-click="ShowHide()">+</md-button>
+        <div ng-show = "IsVisible">
+
         <md-input-container>
-          <!-- <md-virtual-repeat-container id="horizontal-container" md-orient-horizontal>
-            <div md-virtual-repeat="item in items" class="repeated-item" flex>
-              {{item}}
-            </div>
-          </md-virtual-repeat-container> -->
-          <md-select ng-model="chosenOption">
-            <md-option ng-repeat="option in options" ng-value="option">
-              {{option}}
-            </md-option>
-          </md-select>
+          <div ng-repeat="i in items track by $index">
+            <md-button>
+              <img ng-src="{{ path }}{{ i }}" width="50px" height="50px" ng-click='selectSticker(i)' />
+            </md-button>
+          </div>
         </md-input-container>
+      </div>
+
     </div>
     </md-dialog-content>
     <md-dialog-actions>
