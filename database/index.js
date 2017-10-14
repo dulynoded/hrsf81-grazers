@@ -93,13 +93,13 @@ const getAllMessages = () =>
   pool.query('SELECT * FROM messages');
 
 const getMessages = (fromId, toId) =>
-  pool.query(`SELECT firstname, lastname, string_agg(name,'|') AS togroups, title, text, date_time
+  pool.query(`SELECT firstname, lastname, string_agg(name,'|') AS togroups, title, text, media, date_time
      FROM messages
      JOIN users ON messages.from_user_id = users.id
      ${fromId ? `AND messages.from_user_id = ${fromId}` : ''}
      JOIN groups ON messages.to_group_id = groups.id AND messages.event_id = groups.event_id
      ${toId ? `AND messages.to_group_id = ${toId}` : ''}
-     GROUP BY msg_group_id, title, text, firstname, lastname, from_user_id, date_time
+     GROUP BY msg_group_id, title, text, firstname, lastname, from_user_id, date_time, media
      ORDER BY date_time`);
 
 const getUsersByGroup = groupId =>
