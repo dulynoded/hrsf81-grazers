@@ -49,19 +49,20 @@ module.exports = {
     };
 
     this.receive = (event) => {
-      if (event) {
+      const activity = JSON.parse(event.data);
+      if (activity) {
         this.getSchedule(this.user.event_id)
           .then((schedule) => {
             this.eventSchedule = schedule;
           })
           .catch(console.error);
 
-        if (this.group.id) {
+        if (this.group) {
           this.getSchedule(this.user.event_id, this.group.id)
             .then((schedule) => {
               this.groupSchedule = schedule;
             })
-            .catch(console.error);         
+            .catch(console.error);
         }
         document.getElementById('hack').click(); // ?
       }

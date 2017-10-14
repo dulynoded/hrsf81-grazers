@@ -32,7 +32,7 @@ module.exports = {
     this.receive = (event) => {
       const message = JSON.parse(event.data);
       message.timestamp = new Date();
-      const isBroadcast = this.user.role === 'organizer' && message.fromId === this.user.id;
+      const isBroadcast = this.user.role === 'organizer' && message.fromId && message.fromId === this.user.id;
       if (isBroadcast || (message.toIds && message.toIds.includes(this.group.id))) {
         console.log(`Message from the server ${message}`);
         this.messages = this.messages.concat(message);
