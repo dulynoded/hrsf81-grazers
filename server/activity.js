@@ -21,7 +21,13 @@ router.route('/')
     const starttime = starttimeDate.toTimeString().substr(0, 8);
     const endtime = endtimeDate.toTimeString().substr(0, 8);
 
-    db.addSchedule({ date, event_id })
+    db.findSchedule({ date, event_id })
+      .then((data) => {
+        if (data.rows[0].id) {
+          return data;
+        }
+        return db.addSchedule({ date, event_id });
+      })
       .then((data) => {
         const schedule_id = data.rows[0].id;
         return db.addActivity({ starttime, endtime, activity, location, schedule_id });

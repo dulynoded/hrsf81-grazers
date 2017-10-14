@@ -177,6 +177,9 @@ const getAttendeesById = userId =>
 const addEventToUser = (userId, eventId) =>
   pool.query(`UPDATE users SET event_id='${eventId}' WHERE id='${userId}'`);
 
+const findSchedule = schedule =>
+  pool.query(`SELECT * FROM schedules WHERE date = '${schedule.date}' and event_id = ${schedule.event_id}`);
+
 module.exports = {
   addUser,
   addEvent,
@@ -210,4 +213,5 @@ module.exports = {
   getAllAttendees,
   getAttendeesById,
   addEventToUser,
+  findSchedule
 };
