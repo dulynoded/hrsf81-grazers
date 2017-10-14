@@ -3,7 +3,8 @@ module.exports = {
     eventId: '<',
     eventInfo: '<',
   },
-  controller(groups, $http, $mdDialog, $scope) {
+
+  controller(groups, $http, $mdDialog, $scope, websockets) {
     this.clearInputs = () => {
       this.activityDate = '';
       this.activityStartTime = '';
@@ -63,20 +64,29 @@ module.exports = {
       // activityGroups[index][1] contains group names
       const groupsArr = this.activityGroups.map(group => JSON.parse(group)[1]);
 
-      $http.post('/activity', {
+      websockets.send(JSON.stringify({
         event_id: this.eventId,
         date: this.activityDate,
         starttime: this.activityStartTime,
         endtime: this.activityEndTime,
         activity: this.activityTitle,
         location: this.activityLocation,
-        groups: groupsArr
-      })
-        .then(response => response.data)
-        .then((data) => {
-          console.log('activity return data', data);
+        groups: groupsArr,
+      }));
+      // $http.post('/activity', {
+      //   event_id: this.eventId,
+      //   date: this.activityDate,
+      //   starttime: this.activityStartTime,
+      //   endtime: this.activityEndTime,
+      //   activity: this.activityTitle,
+      //   location: this.activityLocation,
+      //   groups: groupsArr
+      // })
+        // .then(response => response.data)
+        // .then((data) => {
+        //   console.log('activity return data', data);
           this.clearInputs();
-        });
+        // });
     };
   },
   templateUrl: 'activityCreate.template.html'

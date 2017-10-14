@@ -12,8 +12,8 @@ try {
   secretAccessKey = process.env.SECRET_ACCESS_KEY;
 }
 
-console.log('AWS KEY IS', accessKey);
-console.log('AWS SECRET KEY IS', secretAccessKey);
+// console.log('AWS KEY IS', accessKey);
+// console.log('AWS SECRET KEY IS', secretAccessKey);
 
 
 AWS.config.update({

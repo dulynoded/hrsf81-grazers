@@ -62,17 +62,68 @@ wss.on('connection', (ws) => {
   console.log('New client connected');
   ws.on('message', (msg) => {
     console.log(`Received ${msg}`);
-    if (msg !== 'KeepAlive') {
+    msg = JSON.parse(msg);
+    
+    if (msg.fromName) {
+      console.log('message route');
       // rest operator for destructuring objects is not yet supported in Node
-      const msgRecord = Object.assign({ timestamp: new Date() }, JSON.parse(msg));
+      const msgRecord = Object.assign({ timestamp: new Date() }, msg);
       db.addMessage(msgRecord)
+        .then(() => {
+          wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(msg);
+            }
+          });
+        })
         .catch((err) => { console.error(`ERROR: message was not saved to the DB (${err})`); });
-      wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(msg);
-        }
-      });
     }
+    
+    if (msg.activity) {
+      console.log('activity route');
+      const { event_id, activity, location, groups } = msg;
+      // adjust data type
+      const date = msg.date.substr(0, 10);
+      const starttimeDate = new Date(msg.starttime);
+      const endtimeDate = new Date(msg.endtime);
+      const starttime = starttimeDate.toTimeString().substr(0, 8);
+      const endtime = endtimeDate.toTimeString().substr(0, 8);
+
+      db.findSchedule({ date, event_id })
+        .then((data) => {
+          if (data.rows[0] && data.rows[0].id) {
+            return data;
+          }
+          return db.addSchedule({ date, event_id });
+        })
+        .then((data) => {
+          const schedule_id = data.rows[0].id;
+          return db.addActivity({ starttime, endtime, activity, location, schedule_id });
+        })
+        .then((data) => {
+          const activity_id = data.rows[0].id;
+          return Promise.all(groups.map((group) => {
+            db.findGroup(group, event_id)
+              .then((groupData) => {
+                const group_id = groupData.rows[0].id;
+                return db.addGroupToActivity(group_id, activity_id);
+              });
+          }));
+        })
+        .then((results) => {
+          wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+              client.send(results);
+            }
+          });
+        })
+        .catch((err) => { console.error(`ERROR: activity was not saved to the DB (${err})`); });
+    }
+    // wss.clients.forEach((client) => {
+    //   if (client.readyState === WebSocket.OPEN) {
+    //     client.send(msg);
+    //   }
+    // });
   });
 
   // setInterval(wsKeepAlive, 5000);
