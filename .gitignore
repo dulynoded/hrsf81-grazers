@@ -30,3 +30,5 @@ bower_components/
 
 server/config.js
 server/config/aws.js
+
+# database/config.js
