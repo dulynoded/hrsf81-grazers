@@ -15,7 +15,7 @@ const sendMail = user => nodemailer.createTestAccount((err, account) => {
   });
 
   // setup email data with unicode symbols
-  const signUpLink = `http://localhost:3000/signup?group_id=${util.groupMap['4']}&event_id=${util.groupMap['1']}`;
+  const signUpLink = `http://localhost:3000/signup?group_id=${util.linkMap.group_id}&event_id=${util.linkMap.event_id}`;
   const mailOptions = {
     from: 'hrsf81.hrsf81.grazers@gmail.com', // sender address
     to: user.email, // list of receivers
