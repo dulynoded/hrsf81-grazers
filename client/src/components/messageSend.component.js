@@ -43,14 +43,17 @@ module.exports = {
     };
 
     $scope.DialogController = ($scope) => {
-      aws.promiz().then((data) => {
-        $scope.options = data.Contents.map(entry => entry.Key);
-      })
-      $scope.chosenOption = ''; // default
-      $scope.$watch("chosenOption", (newValue) => {
-        $scope.endpoint = newValue;
+      $scope.IsVisible = false;
+      $scope.ShowHide = () => {
+        $scope.IsVisible = $scope.IsVisible ? false : true;
+      }
+      $scope.path = 'https://s3-us-west-1.amazonaws.com/hrsf81-grazers/'
+      aws.promiz('communication').then((data) => {
+        $scope.items = data.Contents.map(entry => entry.Key);
       });
-
+      $scope.selectSticker = (sticker) => {
+        $scope.endpoint = sticker;
+      }
       $scope.msg = {
         user: this.user,
         messageTitle: this.messageTitle,
@@ -68,6 +71,7 @@ module.exports = {
       $scope.hide = () => {
         $mdDialog.hide();
       };
+
       $scope.sendAndClose = () => {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;

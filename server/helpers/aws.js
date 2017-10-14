@@ -17,26 +17,27 @@ try {
 
 
 AWS.config.update({
-    accessKeyId: accessKey,
-    secretAccessKey: secretAccessKey,
-    "region": "us-west-1"
-  });
+  accessKeyId: accessKey,
+  secretAccessKey: secretAccessKey,
+  region: 'us-west-1'
+});
 
-const s3bucket = new AWS.S3({params: {Bucket: 'hrsf81-grazers'}, apiVersion: '2006-03-01' });
+
+const s3bucket = new AWS.S3({ params: { Bucket: 'hrsf81-grazers' }, apiVersion: '2006-03-01' });
 s3bucket.listObjects().promise()
   .then((data) => {
     const keys = data.Contents.map(entry => entry.Key);
-    // console.log(keys);
   });
 
-  const promiz = () => {
-    return s3bucket.listObjects().promise();
-  };
+const promiz = (category) => {
+  return s3bucket.listObjects({
+    Prefix: `${category}/`
+  }).promise();
+};
 
 const getSticker = (key) => {
   s3bucket.getObject({ Key: key }).promise()
     .then((data) => {
-      // console.log(data.Body);
     })
     .catch(err => console.error(err));
 };
