@@ -76,7 +76,7 @@ module.exports = {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;
         this.messageBody = $scope.msg.messageBody;
-        this.messageMedia = `https://s3-us-west-1.amazonaws.com/hrsf81-grazers/${$scope.endpoint}`;
+        this.messageMedia = `${$scope.path}${$scope.endpoint}`;
         $mdDialog.hide();
       };
     };
