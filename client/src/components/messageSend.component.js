@@ -5,7 +5,7 @@ module.exports = {
     user: '<',
     group: '<'
   },
-  controller(groups, websockets, $mdDialog, $scope, $timeout) {
+  controller(groups, websockets, $mdDialog, $scope) {
     this.$onChanges = (changesObj) => {
       if (changesObj.group.currentValue || changesObj.user.currentValue) {
         this.messageTitle = '';
