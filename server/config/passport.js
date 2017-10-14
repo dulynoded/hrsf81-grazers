@@ -28,7 +28,7 @@ module.exports = (passport) => {
         let userInsertId;
         let groupId;
         const handleNormalUser = () => (
-          db.findGroup(req.body.job)
+          db.findGroup(req.body.job, req.body.event_id)
             .then((results) => {
               groupId = results.rows[0].id;
               return db.addUserToGroup(groupId, userInsertId);
@@ -48,7 +48,7 @@ module.exports = (passport) => {
               role: req.body.role,
               email: req.body.email,
               phone: req.body.phone,
-              event_id: req.body.conferenceId,
+              event_id: req.body.event_id,
             };
 
             return db.addUser(data);
