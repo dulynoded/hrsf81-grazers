@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 let accessKey;
 let secretAccessKey;
 
+
 try {
   const secrets = require('../config/aws');
   accessKey = secrets.AWS_ACCESS_KEY_ID;
