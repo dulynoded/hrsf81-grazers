@@ -8,6 +8,7 @@ module.exports = {
     this.events = [];
     this.eventObj = {};
     this.isNewEvent = false;
+    this.error = false;
 
     this.loadConferences = (() => {
       const eventObj = {};
@@ -45,7 +46,6 @@ module.exports = {
             resolve(data);
           })
           .catch((err) => {
-            console.log('conference err is', err);
             reject(err);
           });
       })
@@ -54,16 +54,15 @@ module.exports = {
       firstname: '',
       lastname: '',
       password: '',
-      conference: '',
       conferenceInput: '',
-      conferenceId: '',
       role: '',
       job: '',
       email: '',
     };
 
     this.loadRoles = () => {
-      const curConf = JSON.parse($scope.form.conferenceInput);
+      const curConf = $scope.form.conferenceInput ? JSON.parse($scope.form.conferenceInput) : '';
+      if (curConf === '') { return; }
       const curConfId = curConf.id;
       this.roles = Object.keys(this.eventObj[curConfId].groupData);
       const organizerInd = this.roles.indexOf('organizer');
@@ -71,7 +70,8 @@ module.exports = {
     };
 
     this.loadJobs = () => {
-      const curConf = JSON.parse($scope.form.conferenceInput);
+      const curConf = $scope.form.conferenceInput ? JSON.parse($scope.form.conferenceInput) : '';
+      if (curConf === '') { return; }
       const curConfId = curConf.id;
       this.jobs = this.eventObj[curConfId].groupData[$scope.form.role];
     };
@@ -86,11 +86,7 @@ module.exports = {
     };
 
     this.handleClick = () => {
-      // TODO: remove conference and conferenceId?
-      $scope.form.conferenceId = JSON.parse($scope.form.conferenceInput).id;
       $scope.form.event_id = JSON.parse($scope.form.conferenceInput).id;
-      // $scope.form.conferenceName = JSON.parse($scope.form.conference).name;
-      $scope.form.conference = JSON.parse($scope.form.conferenceInput).name;
       $scope.form.event = JSON.parse($scope.form.conferenceInput).name;
       if (this.isNewEvent) {
         $scope.form.conference = '';
@@ -106,9 +102,8 @@ module.exports = {
           );
           this.signUp(userData);
         })
-        .catch((err) => {
-          // TODO: This email is already taken, try again.
-          console.log('err is', err);
+        .catch(() => {
+          this.error = true;
         });
     };
   },

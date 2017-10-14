@@ -48,7 +48,7 @@
             required
             ng-model="form.job"
             md-on-open="$ctrl.loadJobs()"
-            placeholder="Job"
+            placeholder="Group"
             ng-disabled="$ctrl.isNewEvent"
         >
           <md-option ng-repeat="job in $ctrl.jobs track by $index" value={{job}}>
@@ -56,6 +56,9 @@
           </md-option>
         </md-select>
       </md-input-container>
+      <div ng-if="$ctrl.error" role="alert">
+          This user profile already exists.
+      </div>
       <md-button class="md-accent md-raised" aria-label="Sign Up" ng-click="$ctrl.handleClick()">Sign Up</md-button>
     </form>
   </div>
