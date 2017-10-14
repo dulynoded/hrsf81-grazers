@@ -72,7 +72,7 @@ wss.on('connection', (ws) => {
         .then(() => {
           wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
-              client.send(msg);
+              client.send(JSON.stringify(msg));
             }
           });
         })
@@ -113,17 +113,12 @@ wss.on('connection', (ws) => {
         .then((results) => {
           wss.clients.forEach((client) => {
             if (client.readyState === WebSocket.OPEN) {
-              client.send(results);
+              client.send(JSON.stringify(results));
             }
           });
         })
         .catch((err) => { console.error(`ERROR: activity was not saved to the DB (${err})`); });
     }
-    // wss.clients.forEach((client) => {
-    //   if (client.readyState === WebSocket.OPEN) {
-    //     client.send(msg);
-    //   }
-    // });
   });
 
   // setInterval(wsKeepAlive, 5000);
