@@ -3,7 +3,7 @@ module.exports = {
     group: '<',
     user: '<'
   },
-  controller($http) {
+  controller($http, websockets) {
     this.displayedSchedule = 'event';
     this.event = {};
     console.log('in event info');
@@ -48,6 +48,27 @@ module.exports = {
     this.showSchedule = (scheduleType) => {
       this.displayedSchedule = scheduleType;
     };
+
+    this.receive = (event) => {
+      if (event) {
+        this.getSchedule(this.user.event_id)
+          .then((schedule) => {
+            this.eventSchedule = schedule;
+          })
+          .catch(console.error);
+
+        if (this.group.id) {
+          this.getSchedule(this.user.event_id, this.group.id)
+            .then((schedule) => {
+              this.groupSchedule = schedule;
+            })
+            .catch(console.error);         
+        }
+        document.getElementById('hack').click(); // ?
+      }
+    };
+
+    websockets.receive(this.receive);
   },
   templateUrl: 'eventInformation.template.html'
 };

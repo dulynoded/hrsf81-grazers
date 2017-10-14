@@ -39,8 +39,8 @@ const addGroup = group =>
     [group.name, group.type, group.event_id]
   );
 
-const findGroup = group =>
-  pool.query(`SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}')`);
+const findGroup = (group, eventId) =>
+  pool.query(`SELECT id FROM groups WHERE LOWER(name)=LOWER('${group}') AND event_id = '${eventId}'`);
 
 const findGroupById = groupId =>
   pool.query(`SELECT * FROM groups WHERE id='${groupId}'`);
@@ -178,7 +178,8 @@ const addEventToUser = (userId, eventId) =>
   pool.query(`UPDATE users SET event_id='${eventId}' WHERE id='${userId}'`);
 
 const findSchedule = schedule =>
-  pool.query(`SELECT * FROM schedules WHERE date = '${schedule.date}' and event_id = ${schedule.event_id}`);
+  pool.query(`SELECT * FROM schedules WHERE date = '${schedule.date}' and event_id = '${schedule.event_id}'`);
+
 
 module.exports = {
   addUser,
