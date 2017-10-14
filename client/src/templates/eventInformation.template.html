@@ -1,8 +1,8 @@
 <div flex layout="column" layout-align="start" layout-padding class="container">
   <div class="event-info-card">
-    <h3>{{$ctrl.event.name}}</h3>
-    <h3>{{$ctrl.event.startdateReadable}} - {{$ctrl.event.enddateReadable}}</h3>
-    <h3>{{$ctrl.event.location}}</h3>
+    <div class="event-title">{{$ctrl.event.name}}</div>
+    <div class="event-details">{{$ctrl.event.startdateReadable}} - {{$ctrl.event.enddateReadable}}</div>
+    <div class="event-details">{{$ctrl.event.location}}</div>
   </div>
   <div class="schedule">
     <div flex layout="row" layout-align="start center">
