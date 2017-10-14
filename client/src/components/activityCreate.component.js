@@ -42,7 +42,9 @@ module.exports = {
       };
 
       groups.get(this.eventId)
-        .then(groupData => $scope.groups = groupData)
+        .then((groupData) => {
+          $scope.groups = groupData;
+        })
         .catch(console.error);
 
       $scope.hide = () => {
@@ -61,7 +63,6 @@ module.exports = {
     };
 
     this.createActivity = () => {
-      // activityGroups[index][1] contains group names
       const groupsArr = this.activityGroups.map(group => JSON.parse(group)[1]);
 
       websockets.send(JSON.stringify({

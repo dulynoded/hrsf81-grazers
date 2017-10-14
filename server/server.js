@@ -21,7 +21,6 @@ const messages = require('./messages');
 const schedule = require('./schedule');
 const activity = require('./activity');
 const attendee = require('./attendee');
-const stub = require('./stubData');
 
 require('./config/passport.js')(passport);
 
@@ -51,21 +50,11 @@ app.use('/schedule', schedule);
 app.use('/activity', activity);
 app.use('/attendee', attendee);
 
-
-// const wsKeepAlive = () => {
-//   wss.clients.forEach((client) => {
-//     client.send('KeepAlive');
-//   });
-// };
-
 wss.on('connection', (ws) => {
-  console.log('New client connected');
   ws.on('message', (msg) => {
-    console.log(`Received ${msg}`);
     msg = JSON.parse(msg);
-    
+
     if (msg.fromName) {
-      console.log('message route');
       // rest operator for destructuring objects is not yet supported in Node
       const msgRecord = Object.assign({ timestamp: new Date() }, msg);
       db.addMessage(msgRecord)
@@ -78,9 +67,8 @@ wss.on('connection', (ws) => {
         })
         .catch((err) => { console.error(`ERROR: message was not saved to the DB (${err})`); });
     }
-    
+
     if (msg.activity) {
-      console.log('activity route');
       const { event_id, activity, location, groups } = msg;
       // adjust data type
       const date = msg.date.substr(0, 10);
@@ -120,13 +108,10 @@ wss.on('connection', (ws) => {
         .catch((err) => { console.error(`ERROR: activity was not saved to the DB (${err})`); });
     }
   });
-
-  // setInterval(wsKeepAlive, 5000);
 });
 
 app.route('/events')
   .get((req, res) => {
-    console.log('req.query is', req.query);
     if (req.query.id) {
       db.getEvent(req.query.id)
         .then((data) => {
@@ -158,7 +143,6 @@ app.get('/groups', (req, res) => {
     .catch((err) => {
       console.log('err in groups get', err);
     });
-  // res.status(200).send(stub.groups);
 });
 
 app.get('/users', (req, res) => {

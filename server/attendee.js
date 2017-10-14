@@ -6,11 +6,6 @@ const sendMail = require('./mail');
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  console.log(`Handing ${req.originalUrl} routes`);
-  next();
-});
-
 router.get('/', (req, res) => {
   db.getAllAttendees()
     .then((result) => {
