@@ -2,12 +2,12 @@ const Twilio = require('twilio');
 let config, accountSid, authToken;
 
 try {
-  accountSid = process.env.ACCOUNT_SID;
-  authToken = process.env.AUTH_TOKEN;
-} catch(err) {
   config = require('./config');
   accountSid = config.accountSid;
   authToken = config.accountSid;
+} catch(err) {
+  accountSid = process.env.ACCOUNT_SID;
+  authToken = process.env.AUTH_TOKEN;
 }
 
 const client = new Twilio(accountSid, authToken);

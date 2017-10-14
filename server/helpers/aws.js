@@ -1,15 +1,17 @@
 const AWS = require('aws-sdk');
+let secrets;
+
 try {
-  AWS.config.update({
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-    "region": "us-west-1"
-  });
-} catch(err) {
-  const secrets = require('../config/aws');
+  secrets = require('../config/aws');
   AWS.config.update({
     accessKeyId: secrets.AWS_ACCESS_KEY_ID,
     secretAccessKey: secrets.AWS_SECRET_ACCESS_KEY,
+    "region": "us-west-1"
+  });
+} catch(err) {
+  AWS.config.update({
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
     "region": "us-west-1"
   });
 }
