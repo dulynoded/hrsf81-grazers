@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../database/index');
 const sendMessage = require('./twilio');
+const sendMail = require('./mail');
 
 
 const router = express.Router();
@@ -64,6 +65,15 @@ router.post('/', (req, res) => {
         .catch((err) => {
           throw err;
         });
+
+      // sendMail to email
+      sendMail(attendeeParams)
+        .then((mailData) => {
+          // console.log(mailData.id)
+        })
+        .catch((err) => {
+          throw err;
+        })
     })
     .catch((err) => {
       throw err;
