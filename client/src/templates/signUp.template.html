@@ -21,7 +21,7 @@
       <md-input-container flex="33" class="signup-component">
         <md-select
             id="conferenceSelect"
-            required ng-model="form.conferenceInput"
+            required ng-hide="$ctrl.isAttendee" ng-model="form.conferenceInput"
             placeholder="Conference"
             ng-change="$ctrl.selectChange()"
         >
@@ -32,7 +32,7 @@
       </md-input-container>
       <md-input-container flex="33">
         <md-select id="roleSelect"
-            required
+            required ng-hide="$ctrl.isAttendee"
             ng-disabled="$ctrl.isNewEvent"
             ng-model="form.role" md-on-open="$ctrl.loadRoles()"
             placeholder="Role"
@@ -45,7 +45,7 @@
       <md-input-container flex="33">
         <md-select
             id="jobSelect"
-            required
+            required ng-hide="$ctrl.isAttendee"
             ng-model="form.job"
             md-on-open="$ctrl.loadJobs()"
             placeholder="Group"

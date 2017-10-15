@@ -2,13 +2,20 @@ module.exports = {
   bindings: {
     signUp: '<',
   },
-  controller($http, $scope) {
+  controller($http, $scope, $routeParams) {
     this.roles = [];
     this.jobs = [];
     this.events = [];
     this.eventObj = {};
     this.isNewEvent = false;
     this.error = false;
+    this.isAttendee = false;
+
+    this.$onInit = () => {
+      if (Number($routeParams.group_id) === 4) {
+        this.isAttendee = true;
+      }
+    };
 
     this.loadConferences = (() => {
       const eventObj = {};
@@ -86,12 +93,20 @@ module.exports = {
     };
 
     this.handleClick = () => {
-      $scope.form.event_id = JSON.parse($scope.form.conferenceInput).id;
-      $scope.form.event = JSON.parse($scope.form.conferenceInput).name;
+      if ($routeParams.event_id) {
+        $scope.form.event_id = $routeParams.event_id
+        $scope.form.group_id = $routeParams.group_id
+        $scope.form.event = 'Grazers Con';
+      } else {
+        $scope.form.event_id = JSON.parse($scope.form.conferenceInput).id;
+        $scope.form.event = JSON.parse($scope.form.conferenceInput).name;
+      }
       if (this.isNewEvent) {
         $scope.form.conference = '';
         $scope.form.role = 'organizer';
       }
+
+
       $http.post('/user', $scope.form)
         .then(response => response.data)
         .then((data) => {

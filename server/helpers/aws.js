@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
+
 let accessKey;
 let secretAccessKey;
-
 
 try {
   const secrets = require('../config/aws');
@@ -15,7 +15,7 @@ try {
 AWS.config.update({
   accessKeyId: accessKey,
   secretAccessKey: secretAccessKey,
-  region: 'us-west-1'
+  region: 'us-west-1',
 });
 
 const s3bucket = new AWS.S3({ params: { Bucket: 'hrsf81-grazers' }, apiVersion: '2006-03-01' });

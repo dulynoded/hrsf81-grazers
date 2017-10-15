@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../database/index');
 const sendMessage = require('./twilio');
+const sendMail = require('./mail');
 
 
 const router = express.Router();
@@ -34,14 +35,45 @@ router.get('/:userId', (req, res) => {
 
 router.post('/', (req, res) => {
   const attendeeParams = req.body;
+  const groupId = 4; // hard coded for attendee for now
+
+  if (!('event_id' in attendeeParams)) {
+    attendeeParams.event_id = 1;
+  }
 
   db.addUser(attendeeParams)
-    .then(() => {
+    .then((userData) => {
+      // send response
       res.status(201).send();
+
+      // update group_user data
+      const userId = userData.rows[0].id;
+
+      db.addUserToGroup(groupId, userId)
+        .then((userGroupData) => {
+          // console.log(userGroupData);
+        })
+        .catch((err) => {
+          throw err;
+        });
+
+      // sendMessage to mobile/phone
       sendMessage(attendeeParams)
         .then((msgData) => {
           // console.log(msgData.sid);
+        })
+        .catch((err) => {
+          throw err;
         });
+
+      // sendMail to email
+      sendMail(attendeeParams)
+        .then((mailData) => {
+          // console.log(mailData.id)
+        })
+        .catch((err) => {
+          throw err;
+        })
     })
     .catch((err) => {
       throw err;

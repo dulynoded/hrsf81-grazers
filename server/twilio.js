@@ -32,8 +32,12 @@ const sendMessage = (user) => {
   return client.messages.create({
     body: `Hello ${capitalize(user.firstname)}, Grazers conference access code is ${code}`,
     to: `+${user.phone}`,
-    from: '+12065650583'
-  })
+    from: '+12065650583',
+  }).then((msgData) => {
+    return msgData;
+  }).catch((err) => {
+    throw err;
+  });
 };
 
 module.exports = sendMessage;

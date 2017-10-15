@@ -36,6 +36,8 @@
         <input id="new-user-phone" autocomplete="off" ng-model="$ctrl.phone"></input>
       </md-input-container>
       <md-button type="submit" class="md-accent md-raised">Add User</md-button>
+      <label for="link" ng-show="!$ctrl.signUpUrl">Here's your URL!</label>
+      <input id="link" ng-show="!$ctrl.signUpUrl" autocomplete="off" ng-model="$ctrl.url"></input>
     </form>
   </md-content>
 </div>
