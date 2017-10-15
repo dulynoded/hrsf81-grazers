@@ -2,8 +2,7 @@
   <form id="messageSend" flex layout="column" layout-padding>
     <md-dialog-content>
       <div class="md-dialog-content" flex layout="column">
-        <md-select id="group-select" required multiple ng-model="msg.messageTo"
-          placeholder="Which groups should this announcement go to?">
+        <md-select id="group-select" required multiple ng-model="msg.messageTo" placeholder="Which groups should this announcement go to?">
           <md-option ng-repeat="group in groups track by group.id" value="{{[group.id, group.name]}}">{{group.name}}</md-option>
         </md-select>
         <md-input-container>
@@ -14,23 +13,36 @@
           <label for="compose-message-body">What is your announcement?</label>
           <textarea id="compose-message-body" required rows="3" ng-model="msg.messageBody"></textarea>
         </md-input-container>
-
-        <md-button class="md-fab md-mini" flex="nogrow" ng-click="ShowHide()">+</md-button>
-        <div ng-show = "IsVisible">
-
-        <md-input-container>
-          <div ng-repeat="i in items track by $index">
-            <md-button>
-              <img ng-src="{{ path }}{{ i }}" width="50px" height="50px" ng-click='selectSticker(i)' />
-            </md-button>
-          </div>
-        </md-input-container>
+        <md-menu>
+          <md-button class="md-fab md-mini" flex="nogrow" ng-click="$mdMenu.open($event)" aria-label="Open sticker menu">+</md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="toggleCategory('animals')">
+                Animals</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="toggleCategory('communication')">
+                Communication</md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="toggleCategory('pokemon')">
+                Pokemon</md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        <div ng-show="isShown">
+          <md-input-container>
+            <div ng-repeat="i in items">
+              <md-button>
+                <img ng-src="{{ resource }}{{ i }}" width="50px" height="50px" ng-click='selectSticker(i)' />
+              </md-button>
+            </div>
+          </md-input-container>
+        </div>
       </div>
-
-    </div>
     </md-dialog-content>
     <md-dialog-actions>
-        <md-button class="md-accent md-raised" flex="nogrow"s ng-click="sendAndClose(msg)">Send Announcement</md-button>
+      <md-button class="md-accent md-raised" flex="nogrow" s ng-click="sendAndClose(msg)">Send Announcement</md-button>
     </md-dialog-actions>
   </form>
 </md-dialog>
