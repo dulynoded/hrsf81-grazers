@@ -1,17 +1,15 @@
 <div flex layout="column">
   <md-list layout-padding>
     <md-list-item class="md-3-line md-long-text"
-      ng-class="{ highlight: message.fromName === 'Laurent Frazier' && $ctrl.user.role !== 'organizer'}"
       md-whiteframe="2" ng-repeat="message in $ctrl.messages track by $index">
       <div class="md-list-item-text message-card">
         <div class="message-item-row">
           <span class="message-from">{{message.fromName}}</span>
           <span class="md-caption message-timestamp">{{message.timestamp.toString()}}</span>
-          <i class="fa fa-bullhorn fa-2x" ng-if="message.fromName === 'Laurent Frazier' && $ctrl.user.role !== 'organizer'"></i>
         </div>
           <div class="message-title message-item-row">{{message.title}}</div>
           <div class="message-text message-item-row">{{message.text}}</div>
-          <div class="message-text message-item-row">
+          <div class="message-text message-item-row" ng-show="message.media.length">
             <img ng-src='{{message.media}}' height='200' width='200'/>
           </div>
           <div class="message-item-row" ng-if="$ctrl.user.role === 'organizer'">
