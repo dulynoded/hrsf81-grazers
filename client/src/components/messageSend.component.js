@@ -1,4 +1,5 @@
 const aws = require('../../../server/helpers/aws');
+// const db = require('../../../database/index.js');
 
 module.exports = {
   bindings: {
@@ -54,7 +55,12 @@ module.exports = {
       $scope.resource = 'https://s3-us-west-1.amazonaws.com/hrsf81-grazers/'
       $scope.selectSticker = (sticker) => {
         $scope.path = sticker;
+      };
+
+      $scope.addFave = (fav) => {
+        // db.addFavorite(this.user.id, `${$scope.resource}${fav}`);
       }
+
       $scope.msg = {
         user: this.user,
         messageTitle: this.messageTitle,

@@ -16,7 +16,11 @@ const userTable = `
     password VARCHAR(80),
     event_id VARCHAR(80)
 )`;
-
+const favoritesTable = `CREATE TABLE IF NOT EXISTS favorites (
+  id SERIAL UNIQUE NOT NULL PRIMARY KEY,
+  user_id SERIAL REFERENCES users(id),
+  favorite VARCHAR(140)
+)`;
 const eventsTable = `CREATE TABLE IF NOT EXISTS events (
   id SERIAL UNIQUE NOT NULL PRIMARY KEY,
   name VARCHAR(80),
@@ -80,7 +84,9 @@ pool.query(userTable)
   .then(() => pool.query(groupActivityTable))
   .then(() => pool.query(groupUserTable))
   .then(() => pool.query(messagesTable))
+  .then(() => pool.query(favoritesTable))
   .then(() => db.addUser(seed.organizer))
+  .then(() => db.addFavorite(seed.favorite.user_id, seed.favorite.favorite))
   .then(() => Promise.all(seed.users.map(user => db.addUser(user))))
   .then(() => Promise.all(seed.events.map(event => db.addEvent(event))))
   .then(() => Promise.all(seed.groups.map(group => db.addGroup(group))))

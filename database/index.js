@@ -55,6 +55,20 @@ const addUserToGroup = (groupId, userId) =>
     [groupId, userId]
   );
 
+const addFavorite = (userId, fave) =>
+  pool.query(
+    'INSERT INTO favorites(user_id, favorite) values($1, $2)',
+    [userId, fave]
+  );
+
+  // const deleteFavorite = (userId, fave) =>
+  //   pool.query(
+  //     `DELETE FROM favorites WHERE EXISTS (SELECT * FROM favorites WHERE user_id = '${userId}' AND favorite = '${fave}')`);
+  //
+  // const findFavorites = userId =>
+  //   pool.query(
+  //     `SELECT * FROM favorites WHERE user_id = '${userId}'`);
+
 const addMessage = (message) => {
   const messageInserts = message.toIds.map(recipientId =>
     pool.query(
@@ -182,6 +196,7 @@ const findSchedule = schedule =>
 
 
 module.exports = {
+  addFavorite,
   addUser,
   addEvent,
   addSchedule,

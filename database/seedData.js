@@ -240,6 +240,11 @@ module.exports = {
     event_id: 1,
   },
 
+  favorite: {
+    user_id: 1,
+    favorite: 'https://s3-us-west-1.amazonaws.com/hrsf81-grazers/animals/bee.png',
+  },
+
   users: [
     {
       role: 'staff',
