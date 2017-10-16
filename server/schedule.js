@@ -3,10 +3,6 @@ const db = require('../database/index');
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  next();
-});
-
 router.route('/')
   .get((req, res) => {
     res.status(200).send();
@@ -24,11 +20,11 @@ router.get('/:eventId', (req, res) => {
       return Promise.all(schedulesData.rows.map((schedule) => {
         const { date } = schedule;
         return db.getActivitiesByDay(schedule.id)
-          .then(activitiesData => {
+          .then((activitiesData) => {
             return Promise.all(activitiesData.rows.map((actData) => {
               const activity = actData;
               return db.getGroupNamesByActivity(activity.id)
-                .then(groups => {
+                .then((groups) => {
                   // assign arbitrary date to time in order to parse in front end
                   activity.starttime = new Date(`1970-01-01T${activity.starttime}`);
                   activity.endtime = new Date(`1970-01-01T${activity.endtime}`);

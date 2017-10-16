@@ -3,11 +3,6 @@ const db = require('../database/index');
 const aws = require('./helpers/aws');
 const router = express.Router();
 
-router.use((req, res, next) => {
-  console.log('Handling /messages routes');
-  next();
-});
-
 router.get('/', (req, res) => {
   db.getAllMessages()
     .then((result) => {

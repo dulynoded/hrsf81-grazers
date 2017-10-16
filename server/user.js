@@ -5,15 +5,8 @@ const db = require('../database/index');
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  next();
-});
-
 router.post('/', (req, res, next) => {
-  passport.authenticate('local-signup', (err, user, info) => {
-    // console.log('err', err);
-    // console.log('user', user);
-    // console.log('info', info);
+  passport.authenticate('local-signup', (err, user) => {
     if (err) {
       return next(err);
     }
@@ -26,9 +19,6 @@ router.post('/', (req, res, next) => {
 
 router.get('/login', (req, res, next) => {
   passport.authenticate('local-login', (err, user, info) => {
-    // console.log('err', err);
-    // console.log('user', user);
-    // console.log('info', info);
     if (err) {
       return next(err);
     }
@@ -63,9 +53,9 @@ router.get('/:userId/group', (req, res) => {
       const groupId = results.rows[0].group_id;
       return db.findGroupById(groupId);
     })
-    .then((results) => {
-      return results.rows[0];
-    })
+    .then(results => (
+      results.rows[0]
+    ))
     .then((groupData) => {
       res.status(200).send(groupData);
     })

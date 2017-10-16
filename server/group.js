@@ -4,11 +4,6 @@ const db = require('../database/index');
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  console.log('Handing /group routes');
-  next();
-});
-
 router.route('/:groupId')
   .get((req, res) => {
     const groupId = Number(req.params.groupId);

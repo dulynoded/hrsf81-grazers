@@ -1,10 +1,8 @@
 function signIn($location) {
   this.user = null;
 
-  this.getUser = () => {
-    console.log('user is', this.user);
-    return this.user;
-  };
+  this.getUser = () => this.user;
+
 
   this.submit = () => (
     (user, signupRedirect) => {

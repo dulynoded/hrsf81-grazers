@@ -4,10 +4,6 @@ const db = require('../database/index');
 
 const router = express.Router();
 
-router.use((req, res, next) => {
-  next();
-});
-
 router.route('/')
   .get((req, res) => {
     res.status(200).send();
@@ -24,7 +20,6 @@ router.route('/')
     let event_id;
     db.addEvent(eventObj)
       .then((data) => {
-        console.log('data is', data);
         event_id = data.rows[0].id;
         const promiseArr = [];
         promiseArr.push(db.addGroup({ type: 'attendee', name: 'General Admissions', event_id }));
@@ -38,16 +33,16 @@ router.route('/')
         });
         return Promise.all(promiseArr);
       })
-      .then(() => {
-        return db.addEventToUser(eventObj.organizer_id, event_id);
-      })
+      .then(() => (
+        db.addEventToUser(eventObj.organizer_id, event_id)
+      ))
       .then(() => {
         res.status(200).send({ event_id, name: eventObj.name });
       })
       .catch((err) => {
         console.log('err in add event', err);
       });
-  })
+  });
 
 router.route('/:eventId')
   .get((req, res) => {

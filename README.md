@@ -5,8 +5,12 @@ Event HUD helps organizations run large in-person events, such as conferences, s
 ## Grazers
 
 - Austin Sloane
+- Cecily Smith
 - Christine Wong
+- Claire Johnson
+- Clara Cho
 - David Friedman
+- Nanda Saboo
 
 ## Table of Contents
 
@@ -19,7 +23,7 @@ Event HUD helps organizations run large in-person events, such as conferences, s
 1. [Contributing](#contributing)
 
 ## Usage
-Event HUD features are role based -- it currently supports two roles: organizer and staff. Signing in as an organizer grants access to message broadcasting and group management. Message broadcasting can be targeted to specific groups. Signing in as a staff members grants access to receiving all broadcasted messages and message sending within their own group.
+Event HUD features are role based -- these roles are determined by the organizer of an event. Signing up as an organizer allows for event creation. Signing back in as an organizer grants access to message broadcasting, scheduling (activity creation), and group management. Message broadcasting can be targeted to specific groups. Signing in as a staff members grants access to receiving all broadcasted messages, message sending within their own group, and schedule views for their group.
 
 ## Requirements
 
@@ -43,7 +47,7 @@ You will need to have Postgres installed and the server running with the "event_
 
 ```
 node database/setup.js
-``` 
+```
 
 ### Installing Dependencies
 
@@ -67,8 +71,6 @@ User Stories [here](https://drive.google.com/open?id=1lJ-JmssfHyuUQyLMLJr33_QG-k
 [Database Schema](https://drive.google.com/open?id=0B3EBfo09e2PfOGJhYUt2RzlhYmM)
 
 The App plan doc is [here](https://docs.google.com/document/d/1TBVDMC1pwE-sTXAPrfi6eNgeuo4SmaHQXcmDlneldVE/edit#)
-
-
 
 
 ## Contributing
