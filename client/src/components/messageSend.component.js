@@ -27,7 +27,6 @@ module.exports = {
       } else {
         template = 'messageSendStaffDialog.template.html';
       }
-      console.log(template);
       $mdDialog.show({
         controller: $scope.DialogController,
         templateUrl: template,
@@ -47,12 +46,19 @@ module.exports = {
       $scope.ShowHide = () => {
         $scope.IsVisible = $scope.IsVisible ? false : true;
       }
-      $scope.path = 'https://s3-us-west-1.amazonaws.com/hrsf81-grazers/'
-      aws.promiz('communication').then((data) => {
-        $scope.items = data.Contents.map(entry => entry.Key);
-      });
+
+      $scope.isShown = false;
+      $scope.toggleCategory = (category) => {
+        console.log(category);
+        aws.promiz(category).then((data) => {
+          $scope.items = data.Contents.map(entry => entry.Key);
+        });
+        $scope.isShown = true;
+
+      }
+      $scope.resource = 'https://s3-us-west-1.amazonaws.com/hrsf81-grazers/'
       $scope.selectSticker = (sticker) => {
-        $scope.endpoint = sticker;
+        $scope.path = sticker;
       }
       $scope.msg = {
         user: this.user,
@@ -76,7 +82,7 @@ module.exports = {
         this.messageTo = $scope.msg.messageTo;
         this.messageTitle = $scope.msg.messageTitle;
         this.messageBody = $scope.msg.messageBody;
-        this.messageMedia = `${$scope.path}${$scope.endpoint}`;
+        this.messageMedia = `${$scope.resource}${$scope.path}`;
         $mdDialog.hide();
       };
     };
