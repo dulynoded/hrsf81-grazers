@@ -42,15 +42,10 @@ module.exports = {
     };
 
     $scope.DialogController = ($scope) => {
-      $scope.IsVisible = false;
-      $scope.ShowHide = () => {
-        $scope.IsVisible = $scope.IsVisible ? false : true;
-      }
-
       $scope.isShown = false;
       $scope.toggleCategory = (category) => {
         aws.promiz(category).then((data) => {
-          $scope.items = data.Contents.map(entry => entry.Key);
+          $scope.items = data.Contents.map(entry => entry.Key).slice(1);
         })
           .then(() => {
             $scope.isShown = true;
