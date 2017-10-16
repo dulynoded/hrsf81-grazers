@@ -12,7 +12,7 @@
           <div class="message-title message-item-row">{{message.title}}</div>
           <div class="message-text message-item-row">{{message.text}}</div>
           <div class="message-text message-item-row">
-            <img ng-src='{{message.media}}' height='200' width='200'/>
+            <img ng-if='message.media' ng-src='{{message.media}}' height='200' width='200'/>
           </div>
           <div class="message-item-row" ng-if="$ctrl.user.role === 'organizer'">
             <span ng-repeat="group in message.recipients track by $index" class="recipient">{{group.toLowerCase()}}</span>
