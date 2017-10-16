@@ -49,7 +49,6 @@ module.exports = {
 
       $scope.isShown = false;
       $scope.toggleCategory = (category) => {
-        console.log(category);
         aws.promiz(category).then((data) => {
           $scope.items = data.Contents.map(entry => entry.Key);
         });
