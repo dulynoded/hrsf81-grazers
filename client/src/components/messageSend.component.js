@@ -42,20 +42,15 @@ module.exports = {
     };
 
     $scope.DialogController = ($scope) => {
-      $scope.IsVisible = false;
-      $scope.ShowHide = () => {
-        $scope.IsVisible = $scope.IsVisible ? false : true;
-      }
-
       $scope.isShown = false;
       $scope.toggleCategory = (category) => {
-        console.log(category);
         aws.promiz(category).then((data) => {
-          $scope.items = data.Contents.map(entry => entry.Key);
-        });
-        $scope.isShown = true;
-
-      }
+          $scope.items = data.Contents.map(entry => entry.Key).slice(1);
+        })
+          .then(() => {
+            $scope.isShown = true;
+          });
+      };
       $scope.resource = 'https://s3-us-west-1.amazonaws.com/hrsf81-grazers/'
       $scope.selectSticker = (sticker) => {
         $scope.path = sticker;
