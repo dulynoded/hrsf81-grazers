@@ -7,6 +7,10 @@ Event HUD helps organizations run large in-person events, such as conferences, s
 - Austin Sloane
 - Christine Wong
 - David Friedman
+- Cecily Smith
+- Clara Cho
+- Claire Johnson
+- Nanda Saboo
 
 ## Table of Contents
 
